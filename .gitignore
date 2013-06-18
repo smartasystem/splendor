@@ -1,1 +1,9 @@
 wp-config.php
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+
+# Thumbnails
+._*
