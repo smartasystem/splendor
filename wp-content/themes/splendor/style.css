@@ -12,3 +12,38 @@ Template: canvas
 
 .clear{clear: both;}
 .hidden{display:none;}
+
+/* 2013-06-19, Magnus Strand, vy2 sortimentfilter */
+#v2Filter { float:left; width:170px; }
+#v2CurrentFilter { padding:0 0 10px 0; margin-bottom: 30px; box-shadow:0 2px 5px 0 #999; }
+#v2CurrentFilter a { padding:0;  margin:0; }
+#v2TypeFilter { padding-bottom:10px; box-shadow:0 2px 5px 0 #999; }
+#v2TypeFilter dt { background-image:url('images/plus.png'); background-repeat:no-repeat; background-position:0px 7px; }
+#v2TypeFilter dt.expanded { background-image:url('images/minus.png'); }
+#v2TypeFilter dt p { text-indent:10px; margin:0; }
+dd { margin-bottom:0px; }
+dt { border-bottom:1px solid #ccc;  }
+#v2TypeFilter dd p { text-indent:20px; margin:0; font-size: 85%; }
+
+
+.v2FilterHeader {
+	color:white;
+	font-size:13px;
+	font-weight:bold;
+	background: #222; /* Show a solid color for older browsers */
+	background: -moz-linear-gradient(#AA1124, #581215);
+	background: -o-linear-gradient(#AA1124, #581215);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#AA1124), to(#581215)); /* older webkit syntax */
+	background: -webkit-linear-gradient(#AA1124, #581215);
+	padding: 5px 10px;
+	margin-bottom: 6px;
+}
+.v2TypeTitle2 { font-weight:bold; color:black;  }
+.v2TypeTitle4 { border-bottom:1px solid #ccc; text-indent:22px; margin:3px 3px 3px 10px; background-position:0 5px; background-image:url('images/rensa.png'); background-repeat:no-repeat; }
+
+.v2TypeTitle3 { font-weight:bold; color:black; }
+.v2TypeTitle5 { border-bottom:1px solid #ccc; text-indent:22px; margin:3px 3px 3px 10px; background-position:0 5px; background-image:url('images/rensa_allt.png'); background-repeat:no-repeat; }
+p.v2TypeTitle { font-weight:bold; margin:24px 0 0; }
+.v2LeafBox { z-index:2;position:relative; top:-143px; left:110px; width:60px; height:28px; background-image:url('/images/assortmentsearch/lov2.png'); border:1px solid transparent }
+.v2LeafTextBox { z-index:3;font-size: 11px; color:black; position:absolute; top:0px; left:0px; margin:6px 0 1px 16px; width:auto; height:16px; text-align:center; vertical-align:middle;}
+

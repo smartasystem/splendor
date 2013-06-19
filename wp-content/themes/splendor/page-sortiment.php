@@ -1,13 +1,9 @@
 <?php
 /**
- * Template Name: Fynd kategori sida
+ * Template Name: Sortimentsida
  *
- * This is the category list page for Fyndhyllan.
- * Fyndhyllan is a buy and sell market aka "mini blocket"
  *
- * @author Kristain Erendi
- * @package Smakformat
- * @subpackage Template
+ * @author Magnus Strand
  */
 !empty($_REQUEST['cat']) ? $cat = $_REQUEST['cat'] : $cat = '';
 !empty($_REQUEST['type']) ? $type = $_REQUEST['type'] : $type = 'salj';
@@ -18,15 +14,26 @@ get_header();
 <div id="content" class="col-full">
   <div id="main-sidebar-container">    
     <?php woo_main_before(); ?>
-    <div id="main"> 
+    <div id="main">                     
+      <?php
+      if (have_posts()) {
+        while (have_posts()) {
+          the_post();
+          ?>
+          <div <?php post_class(); ?> >
+<?php
+    the_content();
+    require_once 'class.plantview2controller.php';
 
-      
-      
-      
-      
-      
-      
+    $controller = new PlantView2Controller();
 
+    $controller->_dispatch();
+?>
+           </div><!-- /.post -->
+          <?php
+        }
+      }
+      ?>     
     </div><!-- /#main -->
     <?php woo_main_after(); ?>
     <?php //get_sidebar();   ?>
