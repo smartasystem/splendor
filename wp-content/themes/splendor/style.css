@@ -1,0 +1,14 @@
+/*
+Theme Name: Splendor
+Version: 1.0
+Description: A plant company theme. It is a child theme to Canvas, do not remove Woo Canvas!
+Author: Kristian Erendi, Magnus Strand
+Author URI: http://reptilo.se
+Author URI: http://smartasystem.se
+Template: canvas
+*/
+
+@import url("../canvas/style.css");
+
+.clear{clear: both;}
+.hidden{display:none;}
