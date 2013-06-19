@@ -128,7 +128,14 @@ function remove_dashboard_widgets() {
 }
 
 
+/**
+ * Enqueue some java scripts
+ */
+function rep_scripts() {
+  wp_enqueue_script("jquery");
+}
 
+add_action('wp_enqueue_scripts', 'rep_scripts');
 
 
 
