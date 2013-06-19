@@ -98,7 +98,34 @@ if ( get_option( 'woo_woo_tumblog_switch' ) == 'true' && get_option( 'woo_custom
 /* You can add custom functions below */
 /*-----------------------------------------------------------------------------------*/
 
+/**
+ * Description: All below is added by //krillo and //Magnus
+ * 1. cleanup the admin page
+ * 
+ * Date: 2013-06-19
+ * Author: Kristian Erendi 
+ * URI: http://reptilo.se 
+ */
+add_action('wp_dashboard_setup', 'hide_wp_welcome_panel');
+add_action('wp_dashboard_setup', 'remove_dashboard_widgets');
 
+function hide_wp_welcome_panel() {
+  if (current_user_can('edit_theme_options'))
+    $ah_clean_up_option = update_user_meta(get_current_user_id(), 'show_welcome_panel', false);
+}
+
+function remove_dashboard_widgets() {
+  // Ta bort widgets i vänsterkolumnen
+  remove_meta_box('dashboard_incoming_links', 'dashboard', 'normal'); // Inkommande länkar
+  remove_meta_box('dashboard_plugins', 'dashboard', 'normal'); // Tillägg
+  remove_meta_box('dashboard_recent_comments', 'dashboard', 'normal'); // Senaste kommentarer
+  remove_meta_box('dashboard_right_now', 'dashboard', 'normal'); // Just nu
+  // Ta bort widgets i högerkolumnen
+  remove_meta_box('dashboard_primary', 'dashboard', 'side'); // WordPress Blogg
+  remove_meta_box('dashboard_quick_press', 'dashboard', 'side'); // SnabbPress
+  remove_meta_box('dashboard_recent_drafts', 'dashboard', 'side'); // Senaste utkasten
+  remove_meta_box('dashboard_secondary', 'dashboard', 'side'); // Andra WordPressnyheter
+}
 
 
 
