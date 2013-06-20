@@ -61,6 +61,9 @@ a.flex-prev, a.flex-next {
 #plant-search{text-align: center;}
 #plant-search h3{margin:15px 0;}
 #plant-search input{width:75%;}
+#plant-search input[type="submit"]{background-color: #0072BA;border-color: rgb(52, 146, 206);color:#fff;}
+input, textarea {border-radius: 5px 5px 5px 5px; padding: 7px;}
+
 
 
 /* 2013-06-20, Magnus Strand, vy1 sortiment */
