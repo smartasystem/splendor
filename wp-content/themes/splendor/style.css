@@ -57,14 +57,53 @@ a.flex-prev, a.flex-next {
 #main-sidebar-container #sidebar{background-color: #54A73E;color:#fff;}
 #main-sidebar-container #sidebar h3{color:#fff;font-size: 16px; font-weight: normal;}
 
+
 #plant-search{text-align: center;}
 #plant-search h3{margin:15px 0;}
 #plant-search input{width:75%;}
 
 
+/* 2013-06-20, Magnus Strand, vy1 sortiment */
+.assortmentView1Category {
+    width:215px;
+    height:165px;
+    float:left;
+    margin-right:10px;
+    margin-bottom:10px;
+}
 
 
+.assortmentView1TitleBox {
+    color: white;
+    background-color: rgb(0, 114, 186);
+    width: 211px;
+    height: 21px;
+    padding: 2px;
+}
 
+/* 2013-06-20, Magnus Strand, vy2 sortiment */
+.assortmentView2Category {
+    width:150px;
+    height:185px;
+    float:left;
+    margin-right:20px;
+    margin-bottom:15px;
+}
+
+.assortmentView2Image {
+    width: 150px;
+    height: 150px;
+}
+
+.assortmentView2SweTitle {
+    font: 16px 'Arial'; 
+    color: black;
+}
+
+.assortmentView2LatTitle {
+    font: 12px 'Arial'; 
+    color: #afafaf;
+}
 
 /* 2013-06-19, Magnus Strand, vy2 sortimentfilter */
 #v2Filter { float:left; width:170px; }

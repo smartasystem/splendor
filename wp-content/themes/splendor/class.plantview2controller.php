@@ -142,7 +142,7 @@ class PlantView2Controller extends AbstractController
 	function _showView1Category($name, $value, $imageFilename)
 	{
 		$html = <<<EOD
-<div style="width:215px;height:165px;float:left;margin-right:10px;margin-bottom:10px;"><img src="/wp-content/categoryimages/$imageFilename" /><div style="color:white;background-color:blue;width:215px;height:25px;">$name</div></div>
+<div class="assortmentView1Category"><img src="/wp-content/categoryimages/$imageFilename" /><div class="assortmentView1TitleBox">$name</div></div>
 EOD;
 		$newStates = new States($this->stateNames, false);
 		$newStates->setState('vy', 2);
@@ -153,18 +153,22 @@ EOD;
 	function _showView1()
 	{
 		echo <<<EOD
-<div>
-    <form method="GET" action="/" >
-        <input type="hidden" name="page_id" value="{$this->_pageID}" />
-        <input type="hidden" name="vy" value="2" />
-        <input type="text" class="field" placeholder="Ange det svenska eller latinska namnet..." id="sok" name="sok" size="20" /><input type="submit" name="submit1" value="Sök" />
-    </form>
-</div>
-<div style="min-width:225px;max-width:675px;">
+<div id="sidebar">
+EOD;
+       get_sidebar();
+       
+       echo <<<EOD
+ </div>
+<div id="main">
+EOD;
+        the_content();
+        
+        echo <<<EOD
+    <div>
 EOD;
 
 		// show Alla perenner-category		
-		$html = '<div style="max-width:215px;max-height:165px;float:left;margin-right:10px;margin-bottom:10px;"><img src="/wp-content/categoryimages/1.jpg" /><div style="color:white;background-color:blue;width:215px;height:25px;">Alla perenner</div></div>';
+		$html = '<div class="assortmentView1Category"><img src="/wp-content/categoryimages/1.jpg" /><div class="assortmentView1TitleBox">Alla perenner</div></div>';
 		$newStates = new States($this->stateNames, false);
 		$newStates->setState('vy', 2);
 		$newStates->echoLink($html, $this->_pageID);
@@ -180,16 +184,26 @@ EOD;
 			$this->_showView1Category($category->getValue($i), $i, $categoryFilenames[$i-1]);
 
 		echo <<<EOD
-<div class="clear"></div>
+    <div class="clear"></div>
+    </div>
 </div>
 EOD;
 	}
 
 	function _showView2()
 	{
-		echo '<div>';
-		
+       	echo <<<EOD
+<div id="sidebar">
+EOD;
 		$this->_showFilter();
+        
+        echo <<<EOD
+</div>
+<div id="main">
+EOD;
+        the_content();
+        
+
 		$this->_showView2SearchResult();
 		
 		echo '<div class="clear"></div>';
@@ -201,7 +215,18 @@ EOD;
 	{
         global $wpdb;
         
-		$artikelID = sanitizeInt($_GET['artikelID']);
+		echo <<<EOD
+<div id="sidebar">
+EOD;
+       get_sidebar();
+       
+       echo <<<EOD
+ </div>
+<div id="main">
+EOD;
+        the_content();
+        
+        $artikelID = sanitizeInt($_GET['artikelID']);
 		
 		$sql = "SELECT latinsktNamn, svensktNamn FROM artikel WHERE id=$artikelID";
 		
@@ -216,12 +241,7 @@ EOD;
 		}
 		$row = $rows[0];
 		
-		$latinsktNamn = htmlspecialchars($row->latinsktNamn); // break line at first single quote
-		$pos = strpos($latinsktNamn, "'", 1);
-		if ($pos !== false) {
-			$latinsktNamn = substr_replace($latinsktNamn, "<br>'", $pos, 1);
-		}
-		
+		$latinsktNamn = htmlspecialchars($row->latinsktNamn);		
 		$svensktNamn = htmlspecialchars($row->svensktNamn);
 
 		$filenames = array("$artikelID.jpg", "$artikelID-1.jpg", "$artikelID-2.jpg", "$artikelID-3.jpg", "$artikelID-4.jpg");
@@ -265,6 +285,7 @@ EOD;
 		<span class="v3LatTitle">$latinsktNamn</span><br>
 		<span class="v3SweTitle">$svensktNamn</span>
 	</div>
+</div>
 </div>
 </div>
 </div>
@@ -1113,9 +1134,7 @@ EOD;
 
 		echo <<<EOD
 <div>
-<div id="v2Label" style="float:left;"><h2>Det finns $numRecords produkter</h2></div>
-<div style="float:right; text-align:right"><form method="GET" action="/" ><input type="hidden" name="page_id" value="{$this->_pageID}" /><input type="hidden" name="vy" value="2" /><input type="text" class="field" placeholder="Sök" id="sok" name="sok" size="20" /><label for="sok" class="assistive-text">Sök</label><input type="submit" name="submit1" value="Sök" /></form></div>
-<p style="clear:both"></p>
+<div>DET FINNS $numRecords PRODUKTER</div>
 EOD;
 		echo '<div><div id="v2Sort"><ul><span>Sortera på: </span>';
 		if ($this->states->getState('sortering') != 2) // state is already set, no link
@@ -1219,9 +1238,9 @@ EOD;
 	function _showPlant($imageFilename, $latTitle, $sweTitle, $id)
 	{
 		$html = <<<EOD
-<div style="width:200px; height:235px; float:left; margin-right:10px; margin-bottom:10px; "><img style="width:200px; height:200px" src="/wp-content/plantimages/ros.jpg" /><div style="height:35px;">
-		<span class="v2LatTitle">$latTitle</span><br>
-		<span class="v2SweTitle">$sweTitle</span>
+<div class="assortmentView2Category"><img class="assortmentView2Image" src="/wp-content/plantimages/ros.jpg" /><div style="height:35px;">
+		<span class="assortmentView2SweTitle">$sweTitle</span><br>
+		<span class="assortmentView2LatTitle">$latTitle</span>
 	</div>
 </div>
 EOD;
