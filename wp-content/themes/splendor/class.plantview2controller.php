@@ -194,41 +194,35 @@ EOD;
 		
 		echo '<div class="clear"></div>';
 		
-		echo '</div>'; // end of v2Main
+		echo '</div>';
 	}
 
 	function _showView3()
 	{
+        global $wpdb;
+        
 		$artikelID = sanitizeInt($_GET['artikelID']);
 		
-		$sql = "SELECT latinsktNamn, svensktNamn, hojd, blomtid, vaxtplats, egenskaper, hardighet, plantorPerM2 FROM artikel WHERE id=$artikelID";
+		$sql = "SELECT latinsktNamn, svensktNamn FROM artikel WHERE id=$artikelID";
 		
-		$result = $this->_mysqli->query($sql);
-		if (!$result) {
+		$rows = $wpdb->get_results($sql);
+		if ($rows === FALSE) {
 			echo "Databasfel! (query fel)";
 			return;
 		}
-		$row = $result->fetch_assoc();
-		if (!$result) {
+		if (count($rows) != 1) {
 			echo "Databasfel! (ingen post)";
 			return;
 		}
+		$row = $rows[0];
 		
-		$latinsktNamn = htmlspecialchars($row['latinsktNamn']); // break line at first single quote
+		$latinsktNamn = htmlspecialchars($row->latinsktNamn); // break line at first single quote
 		$pos = strpos($latinsktNamn, "'", 1);
 		if ($pos !== false) {
 			$latinsktNamn = substr_replace($latinsktNamn, "<br>'", $pos, 1);
 		}
 		
-		$svensktNamn = htmlspecialchars($row['svensktNamn']);
-		$hojd = htmlspecialchars($row['hojd']);
-		$blomtid = htmlspecialchars($row['blomtid']);
-		$vaxtplats = htmlspecialchars($row['vaxtplats']);
-		$egenskaper = htmlspecialchars($row['egenskaper']);
-		$hardighet = htmlspecialchars($row['hardighet']);
-		$plantorPerM2 = htmlspecialchars($row['plantorPerM2']);
-		if ($plantorPerM2 != '')
-			$plantorPerM2 .= '&nbsp;st';
+		$svensktNamn = htmlspecialchars($row->svensktNamn);
 
 		$filenames = array("$artikelID.jpg", "$artikelID-1.jpg", "$artikelID-2.jpg", "$artikelID-3.jpg", "$artikelID-4.jpg");
 		$filenames2 = array();
@@ -239,9 +233,6 @@ EOD;
 		
 
 		echo '<div id="v3Main">';
-		// bread crumbs
-		// echo '<div id="v3Breadcrumbs"><a href="/">Hem</a>&nbsp;&gt;&gt;&nbsp;<a href="?page_id='.$this->_pageID.'">Våra perenner</a>&nbsp;&gt;&gt;&nbsp;<a href="?page_id='.$this->_pageID.'&vy=2">Växtsök</a>&nbsp;&gt;&gt;&nbsp;Detaljerad vy</div>';
-		echo '<div id="v3Breadcrumbs"><a href="/">Hem</a>&nbsp;&gt;&gt;&nbsp;<a href="?page_id='.$this->_pageID.'">Våra perenner</a>&nbsp;&gt;&gt;&nbsp;<a href="javascript:history.back()">Växtsök</a>&nbsp;&gt;&gt;&nbsp;Detaljerad vy</div>';
 
 		echo <<<EOD
 <div id="v3MainBox">
@@ -249,7 +240,7 @@ EOD;
 <div id="v3Box">
 <div id="v3ImageBox">
 <div id="v3LargeImageBox">
-	<img id="v3MainImage" src="images/article/stora/{$filenames2[0]}"/><div id="v3LeafBox"><div id="v3LeafTextBox">$artikelID</div></div>
+	<img id="v3MainImage" src="/wp-content/plantimages/ros.jpg"/><div id="v3LeafBox"><div id="v3LeafTextBox">$artikelID</div></div>
 </div>
 <div id="v3SmallImagesBox">
 EOD;
@@ -274,20 +265,11 @@ EOD;
 		<span class="v3LatTitle">$latinsktNamn</span><br>
 		<span class="v3SweTitle">$svensktNamn</span>
 	</div>
-	<hr class="v3Rule">
-	<p><span class="v3PropTitle">HÖJD&nbsp;</span>$hojd cm</p>
-	<p><span class="v3PropTitle">BLOMNING&nbsp;</span>$blomtid</p>
-	<p><span class="v3PropTitle">VÄXTPLATS&nbsp;</span>$vaxtplats</p>
-	<p><span class="v3PropTitle">EGENSKAPER&nbsp;</span>$egenskaper</p>
-	<p><span class="v3PropTitle">HÄRDIGHET&nbsp;</span>$hardighet</p>
-	<p><span class="v3PropTitle">PLANTOR&nbsp;PER&nbsp;M2&nbsp;</span>$plantorPerM2</p>
 </div>
 </div>
 </div>
 </div>
 EOD;
-
-		$result->free();
 	}
 
 	function _imageExists($filename)
@@ -893,7 +875,7 @@ EOD;
 		
 		$newStr = implode(" ", $words2);
 		
-		return $this->_mysqli->real_escape_string($newStr);
+		return $newStr;
 	}
 	
 	function _echoSetLink($stateName, $stateValue, $linkName)
@@ -905,6 +887,7 @@ EOD;
 	
 	function _echoSetLink2($stateName, $stateValue, $linkName)
 	{
+        global $wpdb;
 		$newStates = clone $this->states;
 		$newStates->setState($stateName, $stateValue);
 		$newStates->clearState('sok');
@@ -916,19 +899,20 @@ EOD;
 		} else {
 			$where = 'WHERE '.implode(' AND ', $whereParts);
 		}
+        
 		$sql1 = "SELECT count(id) as count1 FROM artikel $where";
-		$result = $this->_mysqli->query($sql1);
-		if (!$result) {
+		$rows = $wpdb->get_results($sql1);
+		if ($rows === FALSE) {
 			echo "Databasfel! (query1 fel)";
 			return;
 		}
-		if ($result->num_rows != 1) {
+        
+		if (count($rows) != 1) {
 			echo "Databasfel! (query1 fel antal rader)";
 			return;
 		}
-		$row = $result->fetch_assoc();
-		$numRecords = $row['count1'];
-		$result->free();
+		$row = $rows[0];
+		$numRecords = $row->count1;
 		
 		$newStates->echoLink('<p>'.$linkName."&nbsp;<span style=\"color:#888\">($numRecords)</span></p>", $this->_pageID);
 	}
@@ -1021,7 +1005,7 @@ EOD;
 			// filter by blomtid
 			$state = $states->getState('kategori');
 			$cat = $this->categories['kategori'];
-			$kategori = $this->_mysqli->real_escape_string($cat->getValue($state));
+			$kategori = esc_sql($cat->getValue($state));
 			$whereParts[] = "kategori LIKE('%|$kategori|%')";
 		}
 		
@@ -1029,7 +1013,7 @@ EOD;
 			// filter by blomtid
 			$state = $states->getState('blomtid');
 			$cat = $this->categories['blomtid'];
-			$blomtid = $this->_mysqli->real_escape_string($cat->getValue($state));
+			$blomtid = esc_sql($cat->getValue($state));
 			$whereParts[] = "blomtid='$blomtid'";
 		}
 		
@@ -1037,7 +1021,7 @@ EOD;
 			// filter by farg
 			$state = $states->getState('farg');
 			$cat = $this->categories['farg'];
-			$farg = $this->_mysqli->real_escape_string($cat->getValue($state));
+			$farg = esc_sql($cat->getValue($state));
 			$whereParts[] = "farg LIKE('%|$farg|%')";
 		}
 		
@@ -1045,7 +1029,7 @@ EOD;
 			// filter by hojd
 			$state = $states->getState('hojd');
 			$cat = $this->categories['hojd'];
-			$hojd2 = $this->_mysqli->real_escape_string($cat->getValue($state));
+			$hojd2 = esc_sql($cat->getValue($state));
 			$whereParts[] = "hojd2='$hojd2'";
 		}
 		
@@ -1053,7 +1037,7 @@ EOD;
 			// filter by hojd
 			$state = $states->getState('lage');
 			$cat = $this->categories['lage'];
-			$lage = $this->_mysqli->real_escape_string($cat->getValue($state));
+			$lage = esc_sql($cat->getValue($state));
 			$whereParts[] = "lage LIKE('%|$lage|%')";
 		}
 
@@ -1061,7 +1045,7 @@ EOD;
 			// filter by hojd
 			$state = $states->getState('jordman');
 			$cat = $this->categories['jordman'];
-			$jordman = $this->_mysqli->real_escape_string($cat->getValue($state));
+			$jordman = esc_sql($cat->getValue($state));
 			$whereParts[] = "jordman LIKE('%|$jordman|%')";
 		}
 
@@ -1070,12 +1054,14 @@ EOD;
 	
 	function _showView2SearchResult()
 	{
+        global $wpdb;
+        
 		$whereParts = array();
 		
 		if (isset($_GET['sok'])) { // we are in text search mode
 			if ($_GET['sok'] != '') {
 				$str = $this->_makeSearchString($_GET['sok']);
-				$whereParts[] = "MATCH(latinsktNamn, svensktNamn, idText) AGAINST('$str' IN BOOLEAN MODE)";
+				$whereParts[] = $wpdb->prepare("MATCH(latinsktNamn, svensktNamn, idText) AGAINST(%s IN BOOLEAN MODE)", $str);
 			}
 		} else { // we are in filter search mode
 			$whereParts = $this->_buildWhere($this->states);
@@ -1100,39 +1086,37 @@ EOD;
 			$offset = 0;
 			
 		$sql1 = "SELECT count(id) as count1 FROM artikel $where";
-		$result = $this->_mysqli->query($sql1);
-		if (!$result) {
+		$rows = $wpdb->get_results($sql1);
+		if ($rows === FALSE) {
 			echo "Databasfel! (query1 fel)";
 			return;
 		}
-		if ($result->num_rows != 1) {
+		if (count($rows) != 1) {
 			echo "Databasfel! (query1 fel antal rader)";
 			return;
 		}
-		$row = $result->fetch_assoc();
-		$numRecords = $row['count1'];
-		$result->free();
+		$row = $rows[0];
+		$numRecords = $row->count1;
 		
 		$sql2 = "SELECT id, latinsktNamn, svensktNamn, hojd, blomtid FROM artikel $where ".
 				"$orderBy ".
 				"LIMIT $offset,$pageSize";
 		
-		$result = $this->_mysqli->query($sql2);
-		if (!$result) {
+		$rows = $wpdb->get_results($sql2);
+		if ($rows === FALSE) {
 			echo "Databasfel! (query2 fel)";
 			return;
 		}
 		
-		$numRows = $result->num_rows;
+		$numRows = count($rows);
 		$numPages = intval( ($numRecords+$pageSize-1)/$pageSize );
 
 		echo <<<EOD
-<div id="v2">
-<div id="v2Label" style="float:left;"><h2>Vi har hittat $numRecords växter som passar din sökning</h2></div>
+<div>
+<div id="v2Label" style="float:left;"><h2>Det finns $numRecords produkter</h2></div>
 <div style="float:right; text-align:right"><form method="GET" action="/" ><input type="hidden" name="page_id" value="{$this->_pageID}" /><input type="hidden" name="vy" value="2" /><input type="text" class="field" placeholder="Sök" id="sok" name="sok" size="20" /><label for="sok" class="assistive-text">Sök</label><input type="submit" name="submit1" value="Sök" /></form></div>
 <p style="clear:both"></p>
 EOD;
-		echo '<span id="v2Label"><h2></h2></span>';
 		echo '<div><div id="v2Sort"><ul><span>Sortera på: </span>';
 		if ($this->states->getState('sortering') != 2) // state is already set, no link
 			echo '<li class="selected">Svenskt namn';
@@ -1167,28 +1151,20 @@ EOD;
 			echo "Inga resultat.";
 			
 		
-		$left = true;
-		while ($row = $result->fetch_assoc()) {
-			$id = $row['id'];
-			// $latinsktNamn = str_replace("'", "<br>", htmlspecialchars($row['latinsktNamn']), 1); // break line at first single quote
-			$latinsktNamn = htmlspecialchars($row['latinsktNamn']); // break line at first single quote
-			$pos = strpos($latinsktNamn, "'", 1);
-			if ($pos !== false) {
-				$latinsktNamn = substr_replace($latinsktNamn, "<br>'", $pos, 1);
-			}
-			$svensktNamn = htmlspecialchars($row['svensktNamn']);
-			$hojd = htmlspecialchars($row['hojd']);
-			$blomtid = htmlspecialchars($row['blomtid']);
+		foreach ($rows as $row) {
+			$id = $row->id;
+			$latinsktNamn = htmlspecialchars($row->latinsktNamn);
+			$svensktNamn = htmlspecialchars($row->svensktNamn);
+			$hojd = htmlspecialchars($row->hojd);
+			$blomtid = htmlspecialchars($row->blomtid);
 			
-			$this->_showPlant($left, $id.'.jpg', $latinsktNamn, $svensktNamn, $hojd.' cm', $blomtid, $id);
-			
-			$left = !$left;
+			$this->_showPlant($id.'.jpg', $latinsktNamn, $svensktNamn, $id);
 		}
 
 		echo <<<EOD
-<p style="clear:both"></p>
+<div class="clear"></div>
 </div>
-<p style="clear:both"></p>
+<div class="clear"></div>
 EOD;
 	
 		echo '<div style="float:right">';
@@ -1200,8 +1176,6 @@ EOD;
 </div>
 </div>
 EOD;
-
-		$result->free();
 	}
 
 	function _showView2Pagination($offset, $numPages, $pageSize)
@@ -1242,27 +1216,12 @@ EOD;
 			$this->_echoSetLink('offset', $curPage*$pageSize, "Nästa sida");
 	}
 
-	function _showPlant($left, $imageFilename, $latTitle, $sweTitle, $height, $bloom, $id)
+	function _showPlant($imageFilename, $latTitle, $sweTitle, $id)
 	{
-		$theClass = $left ? "v2CatLeft" : "v2CatRight";
-/*
-		<div class="v2LeafBox">
-			<div class="v2LeafTextBox">$id</div>
-		</div>
-*/		
 		$html = <<<EOD
-<div class="v2Cat $theClass">
-	<div class="v2ImgBox"><img style="width:200px; height:200px" src="/wp-content/plantimages/ros.jpg" /><div class="v2LeafBox">
-			<div class="v2LeafTextBox">$id</div>
-		</div></div>
-	<div class="v2TextBox">
-		<div class="v2TitleBox">
-			<span class="v2LatTitle">$latTitle</span><br>
-			<span class="v2SweTitle">$sweTitle</span>
-		</div>
-		<hr class="v2Rule">
-		<span class="v2PropTitle">HÖJD&nbsp;</span>$height<br>
-		<span class="v2PropTitle">BLOMNING&nbsp;</span>$bloom
+<div style="width:200px; height:235px; float:left; margin-right:10px; margin-bottom:10px; "><img style="width:200px; height:200px" src="/wp-content/plantimages/ros.jpg" /><div style="height:35px;">
+		<span class="v2LatTitle">$latTitle</span><br>
+		<span class="v2SweTitle">$sweTitle</span>
 	</div>
 </div>
 EOD;
