@@ -13,6 +13,55 @@ Template: canvas
 .clear{clear: both;}
 .hidden{display:none;}
 
+
+#navigation {
+    background: -moz-linear-gradient(center top , #54A73E 0%, #008B45 100%) repeat scroll 0 0 transparent;
+    border: 1px solid #D9D9D9;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.03);
+    clear: both;
+    display: none;
+    font: 14px/14px sans-serif;
+    margin-bottom: 1em;
+    position: relative;
+    color:#fff;
+}
+
+
+a.flex-next:before, #post-gallery .pagination .jcarousel-next:after {
+    content: ")";
+    padding-left: 12px;
+}
+a.flex-prev:before, #post-gallery .pagination .jcarousel-next:after {
+    content: "(";
+    padding-left: 12px;
+}
+
+a.flex-prev:before, a.flex-next:before, #post-gallery .pagination .jcarousel-prev:before, #post-gallery .pagination .jcarousel-next:after {
+    color: #0072BA;
+    font-size: 50px;
+    font-weight: normal;
+    left: -11px;
+    position: absolute;
+    z-index: 1000;
+}
+
+a.flex-prev, a.flex-next {
+    display: block;
+    overflow: hidden;
+    padding-top: 55px;
+    position: relative;
+    width: 57px;
+}
+
+
+
+
+
+
+
+
+
 /* 2013-06-19, Magnus Strand, vy2 sortimentfilter */
 #v2Filter { float:left; width:170px; }
 #v2CurrentFilter { padding:0 0 10px 0; margin-bottom: 30px; box-shadow:0 2px 5px 0 #999; }
@@ -46,4 +95,7 @@ dt { border-bottom:1px solid #ccc;  }
 p.v2TypeTitle { font-weight:bold; margin:24px 0 0; }
 .v2LeafBox { z-index:2;position:relative; top:-143px; left:110px; width:60px; height:28px; background-image:url('/images/assortmentsearch/lov2.png'); border:1px solid transparent }
 .v2LeafTextBox { z-index:3;font-size: 11px; color:black; position:absolute; top:0px; left:0px; margin:6px 0 1px 16px; width:auto; height:16px; text-align:center; vertical-align:middle;}
+
+
+
 

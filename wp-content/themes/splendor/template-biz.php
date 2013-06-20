@@ -22,7 +22,7 @@
 
 			<?php if ( $woo_options['woo_slider_biz'] == 'true' ) { $saved = $wp_query; woo_slider_biz(); $wp_query = $saved; } ?>
             <!-- #main Starts -->
-            <?php woo_main_before(); ?>
+            <?php woo_main_before(); woo_breadcrumbs();?>
             <div id="main">      
 <?php
 	woo_loop_before();
