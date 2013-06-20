@@ -59,8 +59,9 @@ function searchfield_in_menu() {
 EOD;
 }
 
-
+/*
 add_action( 'woo_footer_before', 'footer_separator', 10 );
 function footer_separator() {
-  echo '<div class="clear"></div><div class="separator"></div>';
+  echo '<div class="clear"></div><div class="separator">Tjoho</div>';
 }
+*/

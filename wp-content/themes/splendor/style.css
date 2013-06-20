@@ -14,8 +14,9 @@ Template: canvas
 .hidden{display:none;}
 
 
+body #header{padding:0 0 10px 0;}
+
 #navigation {
-  /*background: -moz-linear-gradient(center top , #54A73E 0%, #008B45 100%) repeat scroll 0 0 transparent; */
   background: -webkit-linear-gradient(#54A73E, #008B45);
   background: -moz-linear-gradient(#54A73E, #008B45);
   background: -o-linear-gradient(#54A73E, #008B45);
@@ -81,6 +82,8 @@ body.home div.post {margin-bottom:0;}
 
 
 
+#footer-puffs{border-top:#66b98f solid 3px;}
+.puff{width:25%;float:left;margin-top: 15px;margin-bottom: 20px;}
 #footer-widgets{border-top:#66b98f solid 3px;}
 /*.separator{border-top:#66b98f solid 3px;}*/
 /* #footer{border-top:#ecd236 solid 3px;} */
