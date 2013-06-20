@@ -15,97 +15,126 @@ Template: canvas
 
 
 #navigation {
-    background: -moz-linear-gradient(center top , #54A73E 0%, #008B45 100%) repeat scroll 0 0 transparent;
-    border: 1px solid #D9D9D9;
-    border-radius: 5px 5px 5px 5px;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.03);
-    clear: both;
-    display: none;
-    font: 14px/14px sans-serif;
-    margin-bottom: 1em;
-    position: relative;
-    color:#fff;
+  /*background: -moz-linear-gradient(center top , #54A73E 0%, #008B45 100%) repeat scroll 0 0 transparent; */
+  background: -webkit-linear-gradient(#54A73E, #008B45);
+  background: -moz-linear-gradient(#54A73E, #008B45);
+  background: -o-linear-gradient(#54A73E, #008B45);
+  background: -ms-linear-gradient(#54A73E, #008B45);
+  background: linear-gradient(#54A73E, #008B45);
+  border: 1px solid #D9D9D9;
+  border-radius: 5px 5px 5px 5px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.03);
+  clear: both;
+  display: none;
+  font: 14px/14px sans-serif;
+  margin-bottom: 1em;
+  position: relative;
+  color:#fff;
 }
 
 
+/*carousel*/
 a.flex-next:before, #post-gallery .pagination .jcarousel-next:after {
-    content: ")";
-    padding-left: 12px;
+  content: ")";
+  padding-left: 12px;
 }
 a.flex-prev:before, #post-gallery .pagination .jcarousel-next:after {
-    content: "(";
-    padding-left: 12px;
+  content: "(";
+  padding-left: 12px;
 }
-
 a.flex-prev:before, a.flex-next:before, #post-gallery .pagination .jcarousel-prev:before, #post-gallery .pagination .jcarousel-next:after {
-    color: #0072BA;
-    font-size: 50px;
-    font-weight: normal;
-    left: -11px;
-    position: absolute;
-    z-index: 1000;
+  color: #0072BA;
+  font-size: 50px;
+  font-weight: normal;
+  left: -11px;
+  position: absolute;
+  z-index: 1000;
 }
-
 a.flex-prev, a.flex-next {
-    display: block;
-    overflow: hidden;
-    padding-top: 55px;
-    position: relative;
-    width: 57px;
+  display: block;
+  overflow: hidden;
+  padding-top: 55px;
+  position: relative;
+  width: 57px;
 }
+#loopedSlider{margin-bottom:10px;}
 
+/*blogg list front page*/
+.extra-h2{font-family: Arial; font-size:16px;font-weight: normal; color:#0c7ac0;}
+body.home h2.title {margin-bottom: 0;}
+body.home h2.title a:link{font-family: Arial; font-size:12px;font-weight: bold;margin-bottom: 0;}
+body.home .post-meta {display:none;}
+body.home div.post {margin-bottom:0;}
+
+/*sidebar*/
 #main-sidebar-container #sidebar{background-color: #54A73E;color:#fff;}
 #main-sidebar-container #sidebar h3{color:#fff;font-size: 16px; font-weight: normal;}
 
 
+/*search*/
 #plant-search{text-align: center;}
 #plant-search h3{margin:15px 0;}
-#plant-search input{width:75%;}
-#plant-search input[type="submit"]{background-color: #0072BA;border-color: rgb(52, 146, 206);color:#fff;}
-input, textarea {border-radius: 5px 5px 5px 5px; padding: 7px;}
+#plant-search input{width:75%;border-radius: 5px 5px 5px 5px; padding: 8px;border-width: 1px;border-style: solid;font-size: 15px;font-family: Arial;}
+#plant-search input[type="text"]{border-color: #555 #CEE596 #CEE596 #555;}
+#plant-search input[type="submit"]{background-color: #0072BA;color:#fff;border-color: #CEE596 #555 #555 #CEE596;border-width: 1px;border-style: solid; padding:8px 8px 8px 8px;}
+#plant-search input[type="submit"]:hover{border-color: #555 #CEE596 #CEE596 #555;padding:6px 10px 10px 6px;}
+
+
+
+#footer-widgets{border-top:#66b98f solid 3px;}
+/*.separator{border-top:#66b98f solid 3px;}*/
+/* #footer{border-top:#ecd236 solid 3px;} */
+div.col-full#footer {
+    border-color: #ecd236;
+    border-radius: 0 0 0 0;
+    border-style: solid;
+    border-width: 3px 0 0;
+}
+div.col-full#footer p{font-family: Arial;font-size: 10px;}
+
 
 
 
 /* 2013-06-20, Magnus Strand, vy1 sortiment */
 .assortmentView1Category {
-    width:215px;
-    height:165px;
-    float:left;
-    margin-right:10px;
-    margin-bottom:10px;
+  width:215px;
+  height:165px;
+  float:left;
+  margin-right:10px;
+  margin-bottom:10px;
 }
 
 
 .assortmentView1TitleBox {
-    color: white;
-    background-color: rgb(0, 114, 186);
-    width: 211px;
-    height: 21px;
-    padding: 2px;
+  color: white;
+  background-color: rgb(0, 114, 186);
+  width: 211px;
+  height: 21px;
+  padding: 2px;
 }
 
 /* 2013-06-20, Magnus Strand, vy2 sortiment */
 .assortmentView2Category {
-    width:150px;
-    height:185px;
-    float:left;
-    margin-right:20px;
-    margin-bottom:15px;
+  width:150px;
+  height:185px;
+  float:left;
+  margin-right:20px;
+  margin-bottom:15px;
 }
 
 .assortmentView2Image {
-    width: 150px;
-    height: 150px;
+  width: 150px;
+  height: 150px;
 }
 
 .assortmentView2SweTitle {
-    font: 16px 'Arial'; 
-    color: black;
+  font: 16px 'Arial'; 
+  color: black;
 }
 
 .assortmentView2LatTitle {
-    font: 12px 'Arial'; 
-    color: #afafaf;
+  font: 12px 'Arial'; 
+  color: #afafaf;
 }
 
 /* 2013-06-19, Magnus Strand, vy2 sortimentfilter */
@@ -122,16 +151,16 @@ dt { border-bottom:1px solid #ccc;  }
 
 
 .v2FilterHeader {
-	color:white;
-	font-size:13px;
-	font-weight:bold;
-	background: #222; /* Show a solid color for older browsers */
-	background: -moz-linear-gradient(#AA1124, #581215);
-	background: -o-linear-gradient(#AA1124, #581215);
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#AA1124), to(#581215)); /* older webkit syntax */
-	background: -webkit-linear-gradient(#AA1124, #581215);
-	padding: 5px 10px;
-	margin-bottom: 6px;
+  color:white;
+  font-size:13px;
+  font-weight:bold;
+  background: #222; /* Show a solid color for older browsers */
+  background: -moz-linear-gradient(#AA1124, #581215);
+  background: -o-linear-gradient(#AA1124, #581215);
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#AA1124), to(#581215)); /* older webkit syntax */
+  background: -webkit-linear-gradient(#AA1124, #581215);
+  padding: 5px 10px;
+  margin-bottom: 6px;
 }
 .v2TypeTitle2 { font-weight:bold; color:black;  }
 .v2TypeTitle4 { border-bottom:1px solid #ccc; text-indent:22px; margin:3px 3px 3px 10px; background-position:0 5px; background-image:url('images/rensa.png'); background-repeat:no-repeat; }

@@ -29,6 +29,7 @@ $page_template = woo_get_page_template();
     <div id="main">      
       <?php
       woo_loop_before();
+      echo '<h2 class="extra-h2">Senaste nytt från bloggen</h2>';
       get_template_part('loop', 'blog');
       woo_loop_after();
       ?>        
