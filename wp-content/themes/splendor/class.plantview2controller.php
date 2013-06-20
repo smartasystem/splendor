@@ -966,7 +966,7 @@ EOD;
 			$cat = $this->categories[$categoryName];
 			
 			$class = $expand ? "expanded" : "";
-			echo '<dt class="'.$class.'"><p class="v2TypeTitle">'.$cat->getShowAs().'</p></dt>';
+			echo '<dt class="'.$class.'"><h3 class="v2TypeTitle">'.$cat->getShowAs().'</h3></dt>';
 			$n = $cat->getNumValues();
 			for ($i = 1; $i <= $n; $i++) {
 				if ($expand)
@@ -980,6 +980,24 @@ EOD;
 	}
 	function _showFilter()
 	{
+        		echo <<<EOD
+    <script>
+        jQuery(document).ready(function($){   
+ 	   // When any dt element is clicked 
+$('dt').click(function(e){ 
+    // All dt elements after this dt element until the next dt element 
+    // Will be hidden or shown depending on it's current visibility 
+    $(this).nextUntil('dt').toggle(); 
+    $(this).toggleClass("expanded"); 
+}); 
+ 
+// Hide all dd elements to start with 
+jQuery('dd').hide(); 
+jQuery('dd.expanded2').show(); 
+     });
+
+    </script>
+EOD;
 		echo '<div id="v2Filter">';
 			
 		if ($this->states->isStateSet('kategori') or
@@ -1005,7 +1023,7 @@ EOD;
 			echo '</div>';
 		}
 		echo '<div id="v2TypeFilter">';
-		echo '<div class="v2FilterHeader">Filtrera växtlista</div>';
+		echo '<div class="v2FilterHeader"><h3>Filtrera växtlista</h3></div>';
 		echo '<dl>';
 
 		foreach ($this->categories as $categoryName => $cat) {
