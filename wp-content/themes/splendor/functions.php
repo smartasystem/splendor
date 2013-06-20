@@ -45,11 +45,14 @@ add_action( 'woo_sidebar_inside_before', 'searchfield_in_menu', 10 );
 function searchfield_in_menu() {
   echo <<<EOD
 <div class="clear"></div>
-  <div>
+  <div id="plant-search">
+    <h3>Hitta snabbt i vårt sortiment</h3>
     <form action="/" method="GET">
-        <input type="hidden" value="7" name="page_id">
-        <input type="hidden" value="2" name="vy">
-        <input type="text" size="20" name="sok" id="sok" placeholder="Ange det svenska eller latinska namnet..." class="field"><input type="submit" value="Sök" name="submit1">
+      <input type="hidden" value="7" name="page_id">
+      <input type="hidden" value="2" name="vy">
+      <input type="text" size="20" name="sok" id="sok" placeholder="Svenskt eller latinskt namn" class="field">
+      <div class="clear"></div>
+      <input type="submit" value="Sök" name="submit1">
     </form>
   </div>
 <div class="clear"></div>
