@@ -1153,8 +1153,6 @@ function woo_nav() {
 		<?php } ?>
 	</ul><!-- /#nav -->
 	<?php } ?>	
-  
-  <input type="text" />
 </div><!-- /#navigation -->
 <?php
 	woo_nav_after();
