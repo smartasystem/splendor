@@ -54,6 +54,13 @@ a.flex-prev, a.flex-next {
     width: 57px;
 }
 
+#main-sidebar-container #sidebar{background-color: #54A73E;color:#fff;}
+#main-sidebar-container #sidebar h3{color:#fff;font-size: 16px; font-weight: normal;}
+
+
+#plant-search{text-align: center;}
+#plant-search h3{margin:15px 0;}
+#plant-search input{width:75%;}
 
 
 /* 2013-06-20, Magnus Strand, vy1 sortiment */
@@ -64,6 +71,7 @@ a.flex-prev, a.flex-next {
     margin-right:10px;
     margin-bottom:10px;
 }
+
 
 .assortmentView1TitleBox {
     color: white;
