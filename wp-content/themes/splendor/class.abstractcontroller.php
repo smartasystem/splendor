@@ -1,43 +1,13 @@
 <?php
 
-/** Namnet på databasen för SvePlant */
-define('WANDELS_DB_NAME', 'splendor_wp');
-
-/** MySQL-databasens användarnamn */
-define('WANDELS_DB_USER', 'splendor_wp');
-
-/** MySQL-databasens lösenord */
-define('WANDELS_DB_PASSWORD', 'klachhg854!+');
-
-/** MySQL-server */
-define('WANDELS_DB_HOST', 'smartasystem.se');
-
-
 define("ROWS_PER_PAGE", 10);
-
-require_once('stopwords.php');
 
 abstract class AbstractController
 {
-	protected $_mysqli;
 	protected $_pageID;
 		
 	function __construct()
 	{
-		$this->_mysqli = new mysqli(WANDELS_DB_HOST, WANDELS_DB_USER, WANDELS_DB_PASSWORD, WANDELS_DB_NAME);
-
-		/* check connection */
-		if ($this->_mysqli->connect_errno) {
-		    printf("Connect failed\n<br>");
-		    exit();
-		}
-		
-		/* change character set to utf8 */
-		if (!$this->_mysqli->set_charset("utf8")) {
-		    printf("Error loading character set utf8\n<br>");
-		    exit();
-		}
-		
 		$this->_pageID = get_the_ID();
 	}
 
@@ -68,7 +38,6 @@ abstract class AbstractController
 	
 	function __destruct()
 	{
-		$this->_mysqli->close();
 	}
 
 	protected function _displayPagination($event, $numPages, $offset, $searchParams)
@@ -124,28 +93,6 @@ abstract class AbstractController
 			}
 		}
 	}
-
-
-	protected function _makeSearchString($str)
-	{
-		$words = explode(' ' , $str);
-		
-		$words2 = array();
-	
-		// include all words except empty and MySQL stopwords
-		foreach ($words as $word) {
-			if (!empty($word)) {
-				if (!isMySqlStopword($word)) {
-					$words2[] = '+'.$word.'*';
-				}
-			}
-		}
-		
-		$newStr = implode(" ", $words2);
-				
-		return $this->_mysqli->real_escape_string($newStr);
-	}
-
 }
 
 ?>
