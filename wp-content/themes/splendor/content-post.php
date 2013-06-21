@@ -37,9 +37,8 @@
  woo_post_before();
 ?>
 <div <?php post_class(); ?>>
+  
 <?php
-echo "AAP";
-
 	woo_post_inside_before();	
 	if ( $woo_options['woo_post_content'] != 'content' AND !is_singular() )
 		woo_image( 'width='.$woo_options['woo_thumb_w'].'&height='.$woo_options['woo_thumb_h'].'&class=thumbnail '.$woo_options['woo_thumb_align'] );
@@ -48,7 +47,18 @@ echo "AAP";
 ?>
 	<div class="entry">
 	    <?php
-	    	if ( $woo_options['woo_post_content'] == 'content' || is_single() ) { the_content(__('Continue Reading &rarr;', 'woothemes') ); } else { the_excerpt(); }
+	    	if ( $woo_options['woo_post_content'] == 'content' || is_single() ) { 
+          the_content(__('Continue Reading &rarr;', 'woothemes') );
+          
+          $cats = get_the_category_list();
+          echo '<div class="cat-list"><span>KATEGORIER: </span>' . $cats . "</div>";
+          echo '<div class="fix"></div>';
+          $tags = get_the_tag_list("", ", &nbsp;");
+          echo '<div class="cat-list"><span>ETIKETTER: </span>' . $tags . "</div>";
+        } else { 
+          the_excerpt(); 
+          
+        }
 	    	if ( $woo_options['woo_post_content'] == 'content' || is_singular() ) wp_link_pages( $page_link_args );
 	    ?>
 	</div><!-- /.entry -->
