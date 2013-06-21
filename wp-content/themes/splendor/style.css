@@ -67,6 +67,9 @@ body.home h2.title a:link{font-family: Arial; font-size:12px;font-weight: bold;m
 body.home .post-meta {display:none;}
 body.home div.post {margin-bottom:0;}
 
+/*breadcrumbs*/
+.trail-before{display: none;}
+
 /*sidebar*/
 #main-sidebar-container #sidebar{background-color: #54A73E;color:#fff;}
 #main-sidebar-container #sidebar h3{color:#fff;font-size: 16px; font-weight: normal;}
@@ -81,12 +84,12 @@ body.home div.post {margin-bottom:0;}
 #plant-search input[type="submit"]:hover{border-color: #555 #CEE596 #CEE596 #555;padding:6px 10px 10px 6px;}
 
 
-
+/*footer*/
 #footer-puffs{border-top:#66b98f solid 3px;}
-.puff{width:25%;float:left;margin-top: 15px;margin-bottom: 20px;}
+.puff{width:21%;float:left;padding: 2% 2% 2% 2%;}
+.puff h3{font-weight: normal;font-size: 13px;color:#0072BA;}
+.puff a{text-decoration: underline;}
 #footer-widgets{border-top:#66b98f solid 3px;}
-/*.separator{border-top:#66b98f solid 3px;}*/
-/* #footer{border-top:#ecd236 solid 3px;} */
 div.col-full#footer {
     border-color: #ecd236;
     border-radius: 0 0 0 0;

@@ -2,39 +2,40 @@
 /**
  * Footer Template
  *
- * Here we setup all logic and XHTML that is required for the footer section of all screens.
- *
- * @package WooFramework
+ * @author Kristain Erendi
+ * @package Splendor
  * @subpackage Template
  */
 global $woo_options;
+$page_promo = get_page_by_title("start");
+$pageId = $page_promo->ID;
 woo_footer_top();
 woo_footer_before();
 ?>
 <div id="footer-puffs">
   <div id="puff1" class="puff">
-    <img src="http://splendor.dev/wp-content/uploads/2013/06/Danger_Mouse_003_430-100x100.jpg" alt="">
-    <h3>Växtnyhter</h3>
-    <p>jhe jhweb uisjh ssjhwjbk kabkb kbakbwjbaj ja</p>
-    <a href="">Ladda hem PDF</a>
+    <img src="<?php the_field("bild1", $pageId); ?>" alt="">
+    <h3><?php the_field("rubrik1", $pageId); ?></h3>
+    <p><?php the_field("text1", $pageId); ?></p>
+    <a href="<?php the_field("lank1", $pageId); ?>"><?php the_field("lanktext1", $pageId); ?></a>
   </div>
   <div id="puff2" class="puff">
-    <img src="http://splendor.dev/wp-content/uploads/2013/06/Danger_Mouse_003_430-100x100.jpg" alt="">
-    <h3>Växtnyhter</h3>
-    <p>jhe jhweb uisjh ssjhwjbk kabkb kbakbwjbaj ja</p>
-    <a href="">Ladda hem PDF</a>
+    <img src="<?php the_field("bild2", $pageId); ?>" alt="">
+    <h3><?php the_field("rubrik2", $pageId); ?></h3>
+    <p><?php the_field("text2", $pageId); ?></p>
+    <a href="<?php the_field("pagelink2", $pageId); ?>"><?php the_field("lanktext2", $pageId); ?></a>
   </div>
   <div id="puff3" class="puff">
-    <img src="http://splendor.dev/wp-content/uploads/2013/06/Danger_Mouse_003_430-100x100.jpg" alt="">
-    <h3>Växtnyhter</h3>
-    <p>jhe jhweb uisjh ssjhwjbk kabkb kbakbwjbaj ja</p>
-    <a href="">Ladda hem PDF</a>
+    <img src="<?php the_field("bild3", $pageId); ?>" alt="">
+    <h3><?php the_field("rubrik3", $pageId); ?></h3>
+    <p><?php the_field("text3", $pageId); ?></p>
+    <a href="<?php the_field("pagelink3", $pageId); ?>"><?php the_field("lanktext3", $pageId); ?></a>
   </div>
   <div id="puff4" class="puff">
-    <img src="http://splendor.dev/wp-content/uploads/2013/06/Danger_Mouse_003_430-100x100.jpg" alt="">
-    <h3>Växtnyhter</h3>
-    <p>jhe jhweb uisjh ssjhwjbk kabkb kbakbwjbaj ja</p>
-    <a href="">Ladda hem PDF</a>
+    <img src="<?php the_field("bild4", $pageId); ?>" alt="">
+    <h3><?php the_field("rubrik4", $pageId); ?></h3>
+    <p><?php the_field("text4", $pageId); ?></p>
+    <a href="<?php the_field("pagelink4", $pageId); ?>"><?php the_field("lanktext4", $pageId); ?></a>
   </div>
 </div>
 <div class="fix"></div>

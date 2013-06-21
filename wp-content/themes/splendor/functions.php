@@ -33,16 +33,16 @@ function remove_dashboard_widgets() {
 /**
  * Enqueue some java scripts
  */
-function rep_scripts() {
+function sp_scripts() {
   wp_enqueue_script("jquery");
 }
 
-add_action('wp_enqueue_scripts', 'rep_scripts');
+add_action('wp_enqueue_scripts', 'sp_scripts');
 
 
 
-add_action( 'woo_sidebar_inside_before', 'searchfield_in_menu', 10 );
-function searchfield_in_menu() {
+add_action( 'woo_sidebar_inside_before', 'sp_searchfield_in_menu', 10 );
+function sp_searchfield_in_menu() {
   echo <<<EOD
 <div class="clear"></div>
   <div id="plant-search">
@@ -58,6 +58,13 @@ function searchfield_in_menu() {
 <div class="clear"></div>
 EOD;
 }
+
+/*
+add_action( 'woo_sidebar_before', 'sp_breadcrumbs', 10 );
+function sp_breadcrumbs() {
+  woo_breadcrumbs();
+}
+*/
 
 /*
 add_action( 'woo_footer_before', 'footer_separator', 10 );
