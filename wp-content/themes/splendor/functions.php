@@ -59,29 +59,32 @@ function sp_searchfield_in_menu() {
 EOD;
 }
 
-
 /**
  * Display as a nice excerpt list
  * @param type $recent
  */
-function sp_display_post_excerpt_li($recent) {
-  $title = $recent["post_title"];
-  $permalink = get_permalink($recent["ID"]);
-  $excerpt = mb_substr($recent["post_content"], 0, 260);
-  $img_url = $recent["ID"];
-  $img = get_the_post_thumbnail($recent["ID"], 'thumbnail');
-  echo <<<POST
+function rep_display_post_excerpt_li($nbr) {
+  $args = array('numberposts' => $nbr);
+  $recent_posts = wp_get_recent_posts($args);
+  echo '<ul id="rep-recent-posts">';
+  foreach ($recent_posts as $recent) {
+    $title = $recent["post_title"];
+    $permalink = get_permalink($recent["ID"]);
+    $excerpt = strip_tags($recent["post_content"]);
+    $excerpt = mb_substr($excerpt, 0, 200);
+    $img_url = $recent["ID"];
+    $img = get_the_post_thumbnail($recent["ID"], 'thumbnail');
+    echo <<<POST
 <li>
   {$img}
   <h2>{$title}</h2>
   <p>{$excerpt}</p>
-  <a href="{$permalink}">Läs mer</a>
+  <a href="{$permalink}">Läs mer &raquo;</a>
 </li>
 POST;
-}
-
-
-// <img width="258" height="199" src="http://splendor.dev/wp-content/uploads/2013/06/Danger_Mouse_003_430.jpg" alt="Danger_Mouse_003_430" class=" wp-image-70 alignright">  
+  }
+  echo '</ul>';
+ }
 
 
 
@@ -98,3 +101,21 @@ function footer_separator() {
   echo '<div class="clear"></div><div class="separator">Tjoho</div>';
 }
 */
+ 
+ 
+//custom post type
+add_action('init', 'sp_create_post_type');
+
+function sp_create_post_type() {
+  register_post_type('visitkort',
+          array(
+              'labels' => array(
+                  'name' => __('visitkort'),
+                  'singular_name' => __('visitkort')
+              ),
+              'public' => true,
+              'has_archive' => false,
+          )
+  );
+}
+ 

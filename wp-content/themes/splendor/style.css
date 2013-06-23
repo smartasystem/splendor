@@ -61,11 +61,17 @@ a.flex-prev, a.flex-next {
 #loopedSlider{margin-bottom:10px;}
 
 /*blogg list front page*/
-.extra-h2{font-family: Arial; font-size:16px;font-weight: normal; color:#0c7ac0;}
+.extra-h2{font-family: Arial; font-size:16px;font-weight: normal; color:#0c7ac0;margin-bottom: 1em;}
+#rep-recent-posts img{float:left;display: inline;border: 1px solid #E6E6E6;height: auto;padding: 3px;margin-right: 20px;}
+#rep-recent-posts li{margin:0 0 25px 0;display: block;overflow: hidden;}
+#rep-recent-posts a{text-decoration: underline;}
+
+/*
 body.home h2.title {margin-bottom: 0;}
 body.home h2.title a:link{font-family: Arial; font-size:12px;font-weight: bold;margin-bottom: 0;}
 body.home .post-meta {display:none;}
 body.home div.post {margin-bottom:0;}
+*/
 
 /*breadcrumbs*/
 .trail-before{display: none;}
@@ -88,6 +94,13 @@ body.home div.post {margin-bottom:0;}
 #plant-search input[type="submit"]{background-color: #0072BA;color:#fff;border-color: #CEE596 #555 #555 #CEE596;border-width: 1px;border-style: solid; padding:8px 8px 8px 8px;}
 #plant-search input[type="submit"]:hover{border-color: #555 #CEE596 #CEE596 #555;padding:6px 10px 10px 6px;}
 
+
+/*contact*/
+.contact-info-box{float:left;margin:30px 5% 0 0;}
+.contact-info-img{border: 1px solid #E6E6E6;padding: 3px;}
+.contact-info{padding-left: 3px;}
+.contact-info-name{font-family: Arial;font-size: 13px;font-weight: bold;margin-top:10px;}
+.contact-info-email{text-decoration: underline;}
 
 /*footer*/
 #footer-puffs{border-top:#66b98f solid 3px;}

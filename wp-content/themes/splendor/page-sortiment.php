@@ -5,9 +5,6 @@
  *
  * @author Magnus Strand
  */
-
-// !empty($_REQUEST['cat']) ? $cat = $_REQUEST['cat'] : $cat = '';
-// !empty($_REQUEST['type']) ? $type = $_REQUEST['type'] : $type = 'salj';
 global $woo_options;
 get_header();
 ?>
@@ -18,12 +15,9 @@ get_header();
     
     <?php
         if (have_posts()) {
-            the_post();
-            
+            the_post();         
             require_once 'class.plantview2controller.php';
-
             $controller = new PlantView2Controller();
-
             $controller->_dispatch();
         }
     ?>

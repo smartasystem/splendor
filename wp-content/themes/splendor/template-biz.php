@@ -32,13 +32,7 @@ $page_template = woo_get_page_template();
       <?php
       woo_loop_before();
       echo '<h2 class="extra-h2">Senaste nytt från bloggen</h2>';
-      $args = array('numberposts' => '5');
-      $recent_posts = wp_get_recent_posts($args);
-      echo '<ul>';
-      foreach ($recent_posts as $recent) {
-        sp_display_post_excerpt_li($recent);
-      }
-      echo '</ul>';
+      rep_display_post_excerpt_li(4);
       woo_loop_after();
       ?>        
     </div><!-- /#main -->
