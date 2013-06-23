@@ -19,22 +19,30 @@ $page_template = woo_get_page_template();
 
   <div id="main-sidebar-container">
 
-    <?php if ($woo_options['woo_slider_biz'] == 'true') {
+    <?php
+    if ($woo_options['woo_slider_biz'] == 'true') {
       $saved = $wp_query;
       woo_slider_biz();
       $wp_query = $saved;
-    } ?>
+    }
+    ?>
     <!-- #main Starts -->
     <!-- ?php woo_main_before(); woo_breadcrumbs();?-->
     <div id="main">      
       <?php
       woo_loop_before();
       echo '<h2 class="extra-h2">Senaste nytt från bloggen</h2>';
-      get_template_part('loop', 'blog');
+      $args = array('numberposts' => '5');
+      $recent_posts = wp_get_recent_posts($args);
+      echo '<ul>';
+      foreach ($recent_posts as $recent) {
+        sp_display_post_excerpt_li($recent);
+      }
+      echo '</ul>';
       woo_loop_after();
       ?>        
     </div><!-- /#main -->
-<?php woo_main_after(); ?>
+  <?php woo_main_after(); ?>
   <?php get_sidebar(); ?>
   </div><!-- /#main-sidebar-container -->         
 <?php get_sidebar('alt'); ?>

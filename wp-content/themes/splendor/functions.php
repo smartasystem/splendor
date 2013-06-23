@@ -29,7 +29,6 @@ function remove_dashboard_widgets() {
   remove_meta_box('dashboard_secondary', 'dashboard', 'side'); // Andra WordPressnyheter
 }
 
-
 /**
  * Enqueue some java scripts
  */
@@ -41,7 +40,8 @@ add_action('wp_enqueue_scripts', 'sp_scripts');
 
 
 
-add_action( 'woo_sidebar_inside_before', 'sp_searchfield_in_menu', 10 );
+add_action('woo_sidebar_inside_before', 'sp_searchfield_in_menu', 10);
+
 function sp_searchfield_in_menu() {
   echo <<<EOD
 <div class="clear"></div>
@@ -58,6 +58,32 @@ function sp_searchfield_in_menu() {
 <div class="clear"></div>
 EOD;
 }
+
+
+/**
+ * Display as a nice excerpt list
+ * @param type $recent
+ */
+function sp_display_post_excerpt_li($recent) {
+  $title = $recent["post_title"];
+  $permalink = get_permalink($recent["ID"]);
+  $excerpt = mb_substr($recent["post_content"], 0, 260);
+  $img_url = $recent["ID"];
+  $img = get_the_post_thumbnail($recent["ID"], 'thumbnail');
+  echo <<<POST
+<li>
+  {$img}
+  <h2>{$title}</h2>
+  <p>{$excerpt}</p>
+  <a href="{$permalink}">Läs mer</a>
+</li>
+POST;
+}
+
+
+// <img width="258" height="199" src="http://splendor.dev/wp-content/uploads/2013/06/Danger_Mouse_003_430.jpg" alt="Danger_Mouse_003_430" class=" wp-image-70 alignright">  
+
+
 
 /*
 add_action( 'woo_sidebar_before', 'sp_breadcrumbs', 10 );
