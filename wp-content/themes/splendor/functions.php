@@ -88,12 +88,12 @@ POST;
 
 
 
-/*
+
 add_action( 'woo_sidebar_before', 'sp_breadcrumbs', 10 );
 function sp_breadcrumbs() {
   woo_breadcrumbs();
 }
-*/
+
 
 /*
 add_action( 'woo_footer_before', 'footer_separator', 10 );

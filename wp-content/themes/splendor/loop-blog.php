@@ -34,6 +34,8 @@ if ( have_posts() ) { $count = 0;
 <div class="fix"></div>
 
 <?php
+  //krillo print the page contents first then list all the blogg items
+  echo '<h3 class="page-blogg-list">' . $posts[0]->post_content . '</h3>';
 	while ( have_posts() ) { the_post(); $count++;
 		woo_get_template_part( 'content', get_post_type() );
 

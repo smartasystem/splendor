@@ -622,7 +622,7 @@ msgstr ""
 #: includes/theme-actions.php:1151
 #@ woothemes
 msgid "Home"
-msgstr ""
+msgstr "Start"
 
 #: functions/admin-functions.php:2281
 #@ woothemes
