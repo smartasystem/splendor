@@ -29,16 +29,14 @@ function remove_dashboard_widgets() {
   remove_meta_box('dashboard_secondary', 'dashboard', 'side'); // Andra WordPressnyheter
 }
 
+add_action('wp_enqueue_scripts', 'sp_scripts');
+
 /**
  * Enqueue some java scripts
  */
 function sp_scripts() {
   wp_enqueue_script("jquery");
 }
-
-add_action('wp_enqueue_scripts', 'sp_scripts');
-
-
 
 add_action('woo_sidebar_inside_before', 'sp_searchfield_in_menu', 1);
 
@@ -84,7 +82,26 @@ function sp_view_page_tree() {
   }
 }
 
+add_action('woo_sidebar_inside_before', 'sp_view_kalender', 3);
 
+function sp_view_kalender() {
+  global $post;
+
+  if (is_page()) {
+    $args = array('post_type' => 'kalender', 'posts_per_page' => 4);
+    $loop = new WP_Query($args);
+    if ($loop->have_posts()):
+      echo '<h3 id="calendar-list">Kalender<h3>';
+      while ($loop->have_posts()) : $loop->the_post();
+        echo '<li>';
+        echo '<h4>'. get_field('datum') .'</h4>';
+        echo '<p>'. get_field('text') .'</p>';
+        echo '</li>';
+      endwhile;
+    endif;
+    wp_reset_query();
+  }
+}
 
 /**
  * Display as a nice excerpt list
@@ -120,14 +137,6 @@ function sp_breadcrumbs() {
     woo_breadcrumbs();
   }
 }
-
-/*
-  add_action( 'woo_footer_before', 'footer_separator', 10 );
-  function footer_separator() {
-  echo '<div class="clear"></div><div class="separator">Tjoho</div>';
-  }
- */
-
 
 //custom post type
 add_action('init', 'sp_create_post_type');
