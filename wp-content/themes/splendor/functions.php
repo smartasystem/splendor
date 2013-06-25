@@ -71,11 +71,11 @@ function sp_view_page_tree() {
       $children = wp_list_pages("title_li=&child_of=" . $post->ID . "&echo=0");
       $titlenamer = '<a href="' . get_page_link($post->post_parent) . '">' . get_the_title($post->post_parent) . '</a>';
     }
-    echo '<div id="page-list-nav"><h3>' . $titlenamer . '</h3>';
     if ($children) {
+      echo '<div id="page-list-nav"><h3>' . $titlenamer . '</h3>';
       echo '<ul>' . $children . '</ul>';
+      echo '</div>';
     }
-    echo '</div>';
   }
   if (is_single()) {
     echo 'Bloggen';
