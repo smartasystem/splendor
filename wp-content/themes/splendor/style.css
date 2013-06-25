@@ -189,35 +189,33 @@ div.col-full#footer p{font-family: Arial;font-size: 10px;}
 }
 
 /* 2013-06-19, Magnus Strand, vy2 sortimentfilter */
-#v2Filter { float:left; width:170px; margin-right:10px; margin-left:10px; margin-bottom:10px;}
-#v2CurrentFilter { padding:0 0 10px 0; margin-bottom: 30px; box-shadow:0 2px 5px 0 #999; }
+#v2Filter { float:left; width:170px; margin-bottom:10px; padding: 5% 10%;}
+#v2CurrentFilter { padding:0 0 10px 0; margin-bottom: 30px; }
 #v2CurrentFilter a { padding:0;  margin:0; }
-#v2TypeFilter { padding-bottom:10px; box-shadow:0 2px 5px 0 #999; }
+#v2TypeFilter { padding-bottom:10px; }
 #v2TypeFilter dt { background-image:url('images/plus.png'); background-repeat:no-repeat; background-position:0px 4px; }
 #v2TypeFilter dt.expanded { background-image:url('images/minus.png'); }
 #v2TypeFilter dt p { text-indent:10px; margin:0; }
-dd { margin-bottom:0px; }
-dt { border-bottom:1px solid #ccc;  }
 #v2TypeFilter dd p { text-indent:20px; margin:0; font-size: 85%; }
+
 
 
 .v2FilterHeader {
   color:white;
   font-size:13px;
   font-weight:bold;
-  background: #222; /* Show a solid color for older browsers */
-  background: -moz-linear-gradient(#AA1124, #581215);
-  background: -o-linear-gradient(#AA1124, #581215);
-  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#AA1124), to(#581215)); /* older webkit syntax */
-  background: -webkit-linear-gradient(#AA1124, #581215);
-  padding: 5px 10px;
   margin-bottom: 6px;
 }
-.v2TypeTitle2 { font-weight:bold; color:black;  }
-.v2TypeTitle4 { border-bottom:1px solid #ccc; text-indent:22px; margin:3px 3px 3px 10px; background-position:0 5px; background-image:url('images/rensa.png'); background-repeat:no-repeat; }
+
+div.v2FilterHeader a p {
+	color: white;
+}
+
+.v2TypeTitle2 { font-weight:bold; color: white }
+.v2TypeTitle4 { text-indent:22px; margin:3px 3px 3px 10px; background-position:0 5px; background-image:url('images/rensa.png'); background-repeat:no-repeat; }
 
 .v2TypeTitle3 { font-weight:bold; color:black; }
-.v2TypeTitle5 { border-bottom:1px solid #ccc; text-indent:22px; margin:3px 3px 3px 10px; background-position:0 5px; background-image:url('images/rensa_allt.png'); background-repeat:no-repeat; }
+.v2TypeTitle5 { text-indent:22px; margin:3px 3px 3px 10px; background-position:0 5px; background-image:url('images/rensa_allt.png'); background-repeat:no-repeat; }
 .v2TypeTitle { font-weight:bold; margin:24px 0 0; }
 
 /* 2013-06-25, Magnus Strand, vy3 sortimentfilter */

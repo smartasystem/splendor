@@ -934,7 +934,7 @@ EOD;
 		$row = $rows[0];
 		$numRecords = $row->count1;
 		
-		$newStates->echoLink('<p>'.$linkName."&nbsp;<span style=\"color:#888\">($numRecords)</span></p>", $this->_pageID);
+		$newStates->echoLink('<p style="color:white">'.$linkName."&nbsp;<span>($numRecords)</span></p>", $this->_pageID);
 	}
 	
 	function _echoClearLink($stateName, $linkName)
@@ -1011,7 +1011,7 @@ EOD;
 			$this->states->isStateSet('jordman') ) {
 			echo '<div id="v2CurrentFilter">';
 			
-			echo '<div class="v2FilterHeader">Nuvarande filtrering</div>';
+			echo '<div class="v2FilterHeader"><h3>Nuvarande filtrering</h3></div>';
 			foreach ($this->categories as $categoryName => $cat) {
 				if ($this->states->isStateSet($categoryName)) {
 					$this->_echoClearLink2($categoryName, "<p class=\"v2TypeTitle4\"><span class=\"v2TypeTitle2\">{$cat->getShowAs()}:</span>&nbsp;".$cat->getValue($this->states->getState($categoryName)).'</p>');
@@ -1026,7 +1026,7 @@ EOD;
 			echo '</div>';
 		}
 		echo '<div id="v2TypeFilter">';
-		echo '<div class="v2FilterHeader"><h3>Filtrera växtlista</h3></div>';
+		echo '<div class="v2FilterHeader"><h3>Filtrera sök</h3></div>';
 		echo '<dl>';
 
 		foreach ($this->categories as $categoryName => $cat) {
