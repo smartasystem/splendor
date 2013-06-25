@@ -78,7 +78,7 @@ body.home div.post {margin-bottom:0;}
 
 /*sidebar*/
 #main-sidebar-container #sidebar{background-color: #8eb429;color:#fff;}
-#main-sidebar-container #sidebar h3, #main-sidebar-container #sidebar h3 a{color:#fff;font-size: 16px; font-weight: normal;margin-top: 5px;margin-bottom: 10px;}
+#main-sidebar-container #sidebar h3, #main-sidebar-container #sidebar h3 a{color:#fff;font-size: 16px; font-weight: normal;margin-top: 5px;margin-bottom: 10px;border-bottom: #fff solid 1px;}
 .widget{margin:10% 20% 10% 10%;}
 .widget h3{padding-bottom: 2px;}
 .widget ul{padding-top: 8px;}
@@ -100,7 +100,7 @@ body.home div.post {margin-bottom:0;}
 #page-list-nav ul li.page_item{}
 #page-list-nav ul li.page_item a{color:#fff;padding-left:10px;text-transform: uppercase; font-size: 11px;}
 
-
+#calendar-list{padding: 5% 10% 5% 10%;}
 
 /*contact*/
 .contact-info-box{float:left;margin:30px 5% 0 0;}
