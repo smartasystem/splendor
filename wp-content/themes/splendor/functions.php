@@ -84,6 +84,16 @@ function sp_view_page_tree() {
   }
 }
 
+add_action('woo_sidebar_inside_before', 'sp_view_assortment_filter', 4);
+
+function sp_view_assortment_filter() {
+	if (is_page() and isset($_GET['vy']) and ($_GET['vy'] == 2)) { // only display filter on view 2
+		require_once 'class.plantview2controller.php';
+		$controller = new PlantView2Controller();
+        $controller->_showFilter();
+  }
+}
+
 
 
 /**

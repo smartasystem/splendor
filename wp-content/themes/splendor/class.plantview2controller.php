@@ -182,8 +182,8 @@ EOD;
     </div>
 </div>
 EOD;
+		
       get_sidebar();
-
 	}
 
 	function _showView2()
@@ -198,9 +198,7 @@ EOD;
 		
 		echo '</div>';
  
-		echo '<div id="sidebar">';
-		$this->_showFilter();
-		echo '</div>';
+		get_sidebar();
  	}
 
 	function _showView3()
@@ -981,7 +979,11 @@ EOD;
 	}
 	function _showFilter()
 	{
-        		echo <<<EOD
+		$this->states = new States($this->stateNames, true);
+		
+		$this->_initCategories();
+
+   		echo <<<EOD
     <script>
         jQuery(document).ready(function($){   
  	   // When any dt element is clicked 
@@ -1033,8 +1035,10 @@ EOD;
 		}
 
 		echo '</dl>';
-		echo '</div>';
-		echo '</div>';
+		echo '</div>'; // end of v2TypeFilter
+		
+		echo '</div>'; // end of v2Filter
+		echo '<div class="fix"></div>';
 	}
 	
 	function _buildWhere($states)
