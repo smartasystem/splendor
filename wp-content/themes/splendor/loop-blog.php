@@ -40,6 +40,7 @@ if ( have_posts() ) { $count = 0;
 		woo_get_template_part( 'content', get_post_type() );
 
 	} // End WHILE Loop
+  wp_reset_query();
 } else {
 	get_template_part( 'content', 'noposts' );
 } // End IF Statement

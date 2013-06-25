@@ -12,6 +12,8 @@ get_header();
     <?php woo_main_before(); ?>
     <div id="main">
       <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+          <?php $slug = $post->post_name; //echo $slug; ?>
+          <h1><?php the_title();?></h1>
           <?php the_content(); ?>
           <?php
         endwhile;
@@ -28,43 +30,17 @@ get_header();
           $email = get_field('email');
           $phone = get_field('telefon');
           $img = get_field('bild');
-          ?>
-          <section class="contact-info-box">
-            <img class="contact-info-img" src="<?php echo $img; ?>" alt="">
-            <div class="contact-info-name contact-info"><?php echo $name; ?></div>
-            <div class="contact-info-position contact-info"><?php echo $position; ?></div>
-            <div class="contact-info-phone contact-info">Direkt: <?php echo $phone; ?></div>
-            <div class="contact-info-email contact-info"><a href="mailto:<?php echo $email; ?>">E-post<!--?php echo $email; ?--></a></div>
-          </section>
-          <section class="contact-info-box">
-            <img class="contact-info-img" src="<?php echo $img; ?>" alt="">
-            <div class="contact-info-name contact-info"><?php echo $name; ?></div>
-            <div class="contact-info-position contact-info"><?php echo $position; ?></div>
-            <div class="contact-info-phone contact-info">Direkt: <?php echo $phone; ?></div>
-            <div class="contact-info-email contact-info"><a href="mailto:<?php echo $email; ?>">E-post<!--?php echo $email; ?--></a></div>
-          </section>
-          <section class="contact-info-box">
-            <img class="contact-info-img" src="<?php echo $img; ?>" alt="">
-            <div class="contact-info-name contact-info"><?php echo $name; ?></div>
-            <div class="contact-info-position contact-info"><?php echo $position; ?></div>
-            <div class="contact-info-phone contact-info">Direkt: <?php echo $phone; ?></div>
-            <div class="contact-info-email contact-info"><a href="mailto:<?php echo $email; ?>">E-post<!--?php echo $email; ?--></a></div>
-          </section>
-          <section class="contact-info-box">
-            <img class="contact-info-img" src="<?php echo $img; ?>" alt="">
-            <div class="contact-info-name contact-info"><?php echo $name; ?></div>
-            <div class="contact-info-position contact-info"><?php echo $position; ?></div>
-            <div class="contact-info-phone contact-info">Direkt: <?php echo $phone; ?></div>
-            <div class="contact-info-email contact-info"><a href="mailto:<?php echo $email; ?>">E-post<!--?php echo $email; ?--></a></div>
-          </section>
-          <section class="contact-info-box">
-            <img class="contact-info-img" src="<?php echo $img; ?>" alt="">
-            <div class="contact-info-name contact-info"><?php echo $name; ?></div>
-            <div class="contact-info-position contact-info"><?php echo $position; ?></div>
-            <div class="contact-info-phone contact-info">Direkt: <?php echo $phone; ?></div>
-            <div class="contact-info-email contact-info"><a href="mailto:<?php echo $email; ?>">E-post<!--?php echo $email; ?--></a></div>
-          </section>
-        <?php endwhile; ?>
+          $department = get_field('avdelning');
+          if($department == $slug): ?>
+            <section class="contact-info-box">
+              <img class="contact-info-img" src="<?php echo $img; ?>" alt="">
+              <div class="contact-info-name contact-info"><?php echo $name; ?></div>
+              <div class="contact-info-position contact-info"><?php echo $position; ?></div>
+              <div class="contact-info-phone contact-info">Direkt: <?php echo $phone; ?></div>
+              <div class="contact-info-email contact-info"><a href="mailto:<?php echo $email; ?>">E-post<!--?php echo $email; ?--></a></div>
+            </section>
+          <?php endif; ?>
+        <?php endwhile; wp_reset_query();?>
       </section>
 
     </div> <!-- main -->

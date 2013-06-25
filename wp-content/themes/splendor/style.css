@@ -78,7 +78,7 @@ body.home div.post {margin-bottom:0;}
 
 /*sidebar*/
 #main-sidebar-container #sidebar{background-color: #8eb429;color:#fff;}
-#main-sidebar-container #sidebar h3{color:#fff;font-size: 16px; font-weight: normal;}
+#main-sidebar-container #sidebar h3{color:#fff;font-size: 16px; font-weight: normal;margin-top: 5px;}
 .widget{margin:10% 20% 10% 10%;}
 .widget h3{padding-bottom: 2px;}
 .widget ul{padding-top: 8px;}
@@ -87,12 +87,15 @@ body.home div.post {margin-bottom:0;}
 
 
 /*search*/
-#plant-search{text-align: center;}
+#plant-search{padding: 5% 10%;   border-bottom: 1px solid #FFFFFF;text-align: center;}
 #plant-search h3{margin:15px 0;}
-#plant-search input{width:75%;border-radius: 5px 5px 5px 5px; padding: 8px;border-width: 1px;border-style: solid;font-size: 15px;font-family: Arial;}
+#plant-search form{overflow:hidden;}
+#plant-search input{width:100%;border-radius: 5px 5px 5px 5px; padding: 8px;border-width: 1px;border-style: solid;font-size: 15px;font-family: Arial;}
 #plant-search input[type="text"]{border-color: #555 #CEE596 #CEE596 #555;}
 #plant-search input[type="submit"]{background-color: #0072BA;color:#fff;border-color: #CEE596 #555 #555 #CEE596;border-width: 1px;border-style: solid; padding:8px 8px 8px 8px;}
 #plant-search input[type="submit"]:hover{border-color: #555 #CEE596 #CEE596 #555;padding:6px 10px 10px 6px;}
+
+#page-list-nav{padding: 5% 10% 5% 10%;}
 
 
 /*contact*/

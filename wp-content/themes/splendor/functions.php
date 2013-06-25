@@ -40,7 +40,7 @@ add_action('wp_enqueue_scripts', 'sp_scripts');
 
 
 
-add_action('woo_sidebar_inside_before', 'sp_searchfield_in_menu', 10);
+add_action('woo_sidebar_inside_before', 'sp_searchfield_in_menu', 1);
 
 function sp_searchfield_in_menu() {
   echo <<<EOD
@@ -59,19 +59,46 @@ function sp_searchfield_in_menu() {
 EOD;
 }
 
+add_action('woo_sidebar_inside_before', 'sp_view_page_tree', 2);
+
+function sp_view_page_tree() {
+  global $post;
+  if (is_page()) {
+    if ($post->post_parent != 0) {
+      $forefather = end($post->ancestors);
+      $children = wp_list_pages("title_li=&child_of=" . $forefather . "&echo=0");
+      $titlenamer = '<a href="' . get_page_link($forefather) . '">' . get_the_title($forefather) . '</a>';
+      $slideshow_post_id = $forefather;
+    } else {
+      $children = wp_list_pages("title_li=&child_of=" . $post->ID . "&echo=0");
+      $titlenamer = '<a href="' . get_page_link($post->post_parent) . '">' . get_the_title($post->post_parent) . '</a>';
+    }
+    echo '<div id="page-list-nav"><h2>' . $titlenamer . '</h2>';
+    if ($children) {
+      echo '<ul>' . $children . '</ul>';
+    }
+    echo '</div>';
+  }
+  if (is_single()) {
+    echo 'Bloggen';
+  }
+}
+
+
+
 /**
  * Display as a nice excerpt list
  * @param type $recent
  */
-function rep_display_post_excerpt_li($nbr) {
-  $args = array('numberposts' => $nbr);
+function rep_display_post_excerpt_li($nbrposts, $nbrchar = 200) {
+  $args = array('numberposts' => $nbrposts);
   $recent_posts = wp_get_recent_posts($args);
   echo '<ul id="rep-recent-posts">';
   foreach ($recent_posts as $recent) {
     $title = $recent["post_title"];
     $permalink = get_permalink($recent["ID"]);
     $excerpt = strip_tags($recent["post_content"]);
-    $excerpt = mb_substr($excerpt, 0, 200);
+    $excerpt = mb_substr($excerpt, 0, $nbrchar);
     $img_url = $recent["ID"];
     $img = get_the_post_thumbnail($recent["ID"], 'thumbnail');
     echo <<<POST
@@ -84,38 +111,36 @@ function rep_display_post_excerpt_li($nbr) {
 POST;
   }
   echo '</ul>';
- }
-
-
-
-
-add_action( 'woo_sidebar_before', 'sp_breadcrumbs', 10 );
-function sp_breadcrumbs() {
-  woo_breadcrumbs();
 }
 
+add_action('woo_sidebar_before', 'sp_breadcrumbs', 10);
+
+function sp_breadcrumbs() {
+  if (!is_home()) {
+    woo_breadcrumbs();
+  }
+}
 
 /*
-add_action( 'woo_footer_before', 'footer_separator', 10 );
-function footer_separator() {
+  add_action( 'woo_footer_before', 'footer_separator', 10 );
+  function footer_separator() {
   echo '<div class="clear"></div><div class="separator">Tjoho</div>';
-}
-*/
- 
- 
+  }
+ */
+
+
 //custom post type
 add_action('init', 'sp_create_post_type');
 
 function sp_create_post_type() {
-  register_post_type('visitkort',
-          array(
-              'labels' => array(
-                  'name' => __('visitkort'),
-                  'singular_name' => __('visitkort')
-              ),
-              'public' => true,
-              'has_archive' => false,
+  register_post_type('visitkort', array(
+      'labels' => array(
+          'name' => __('visitkort'),
+          'singular_name' => __('visitkort')
+      ),
+      'public' => true,
+      'has_archive' => false,
           )
   );
 }
- 
+
