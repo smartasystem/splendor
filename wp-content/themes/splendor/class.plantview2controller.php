@@ -151,15 +151,9 @@ EOD;
 	}
 	
 	function _showView1()
-	{
-		echo <<<EOD
-<div id="sidebar">
-EOD;
-       get_sidebar();
-       
+	{  
        echo <<<EOD
- </div>
-<div id="main">
+	<div id="main">
 EOD;
         the_content();
         
@@ -188,43 +182,30 @@ EOD;
     </div>
 </div>
 EOD;
+      get_sidebar();
+
 	}
 
 	function _showView2()
 	{
-       	echo <<<EOD
-<div id="sidebar">
-EOD;
-		$this->_showFilter();
-        
-        echo <<<EOD
-</div>
-<div id="main">
-EOD;
-        the_content();
-        
+        echo '<div id="main">';
+
+		the_content();
 
 		$this->_showView2SearchResult();
 		
 		echo '<div class="clear"></div>';
 		
 		echo '</div>';
-	}
+ 
+		echo '<div id="sidebar">';
+		$this->_showFilter();
+		echo '</div>';
+ 	}
 
 	function _showView3()
 	{
         global $wpdb;
-        
-		echo <<<EOD
-<div id="sidebar">
-EOD;
-       get_sidebar();
-       
-       echo <<<EOD
- </div>
-<div id="main">
-EOD;
-        the_content();
         
         $artikelID = sanitizeInt($_GET['artikelID']);
 		
@@ -244,60 +225,80 @@ EOD;
 		$latinsktNamn = htmlspecialchars($row->latinsktNamn);		
 		$svensktNamn = htmlspecialchars($row->svensktNamn);
 
-		$filenames = array("$artikelID.jpg", "$artikelID-1.jpg", "$artikelID-2.jpg", "$artikelID-3.jpg", "$artikelID-4.jpg");
+		$filenames = array("$artikelID.jpg", "$artikelID-1.jpg", "$artikelID-2.jpg");
 		$filenames2 = array();
 		foreach ($filenames as $filename) {
 			if ($this->_imageExists($filename))
 				$filenames2[] = $filename;
 		}
 		
-
-		echo '<div id="v3Main">';
-
-		echo <<<EOD
-<div id="v3MainBox">
-<div id="v3SidebarLeft"></div>
-<div id="v3Box">
-<div id="v3ImageBox">
-<div id="v3LargeImageBox">
-	<img id="v3MainImage" src="/wp-content/plantimages/ros.jpg"/><div id="v3LeafBox"><div id="v3LeafTextBox">$artikelID</div></div>
-</div>
-<div id="v3SmallImagesBox">
+        echo <<<EOD
+<div id="main">
+	<div id="assortmentView3TitleBox">
+		<span class="assortmentView3SweTitle">$svensktNamn</span><br>
+		<span class="assortmentView3LatTitle">($latinsktNamn)</span>
+	</div>
+	<div id="assortmentView3Main">
+		<div id="assortmentView3Col1">
+			<img id="assortmentView3MainImage" src="/wp-content/plantimages/ros.jpg">
+			<strong>FLER BILDER:</strong>
+			<div id="assortmentView3SmallImages">
 EOD;
-	
+      
 	$firstImage = true;
 	$index = 1;
 	$numImages = count($filenames2);
 	foreach ($filenames2 as $filename) {
 		if ($firstImage)
-			$class = "v3ImageSelected";
+			$class = "assortmentView3SmallImageSelected";
 		else
-			$class = "v3ImageNotSelected";
-		echo "<img id=\"v3SmallImage$index\" class=\"$class\" src=\"images/article/sma/$filename\" style=\"cursor:pointer\" onclick=\"doImageClick('images/article/stora/$filename', $index, $numImages)\" />";
+			$class = "assortmentView3SmallImageNotSelected";
+		echo "<img id=\"assortmentView3SmallImage$index\" class=\"assortmentView3SmallImage $class\" src=\"/wp-content/plantimages/ros.jpg\" style=\"cursor:pointer\" onclick=\"doImageClick('images/article/stora/$filename', $index, $numImages)\" />";
 		$firstImage = false;
 		$index++;
 	}
 	echo <<<EOD
-</div>
-</div>
-<div id="v3TextBox">
-	<div id="v3TitleBox">
-		<span class="v3LatTitle">$latinsktNamn</span><br>
-		<span class="v3SweTitle">$svensktNamn</span>
-	</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+			</div><!-- end of #assortmentView3SmallImages -->
+			<div id="assortmentView3Tips">
+				<h2 class="extra-h2">Trådgärdsmästarens tips</h2>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum est est, fringilla laoreet pretium et, mollis vel lorem.
+	Vivamus vel eros volutpat, fringilla lorem a, convallis mi. Vivamus felis erat, commodo et blandit vel, eleifend et turpis.
+	Morbi volutpat vel magna a ornare. In hac habitasse platea dictumst.</p>
+			</div><!-- end of #assortmentView3Tips -->
+		</div><!-- end of #assortmentView3Col1 -->
+		<div id="assortmentView3Col2">
+			<div id="assortmentView3PlantInfo">
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum est est, fringilla laoreet pretium et, mollis vel lorem.
+	Vivamus vel eros volutpat, fringilla lorem a, convallis mi. Vivamus felis erat, commodo et blandit vel, eleifend et turpis.
+	Morbi volutpat vel magna a ornare. In hac habitasse platea dictumst.</p>
+<p>Praesent felis neque, volutpat in lacus sit amet, tristique venenatis urna.</p>
+<p>Donec eleifend nibh ac adipiscing molestie. Fusce dictum nec orci at cursus.</p>
+<strong>VÄXTSÄTT:</strong><br>
+<strong>UTSEENDE:</strong><br>
+<strong>STORLEK:</strong>6-8 meter<br>
+<strong>VÄXTLÄGE:</strong><br>
+<strong>ZON (HÄRDIGHET):</strong>1-5<br>
+			</div>	
+			<div id="assortmentView3StepByStep">
+				<strong>STEG FÖR STEG, SÅ HÄR GÖR DU:</strong>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum est est, fringilla laoreet pretium et, mollis vel lorem.
+	Vivamus vel eros volutpat, fringilla lorem a, convallis mi. Vivamus felis erat, commodo et blandit vel, eleifend et turpis.
+	Morbi volutpat vel magna a ornare. In hac habitasse platea dictumst.</p>
+			</div>
+		</div>
+	</div><!-- end of #assortmentView3Main -->
+</div><!-- end of #main -->
 EOD;
+       get_sidebar();
 	}
 
 	function _imageExists($filename)
 	{
-		$pathname = "/home/u/u6443829/www/images/article/stora/$filename";
+		// $pathname = "/home/u/u6443829/www/images/article/stora/$filename";
 		
-		return file_exists($pathname); 
+		// return file_exists($pathname); 
+        
+        return true;
 	}
 
 	function _isMySqlStopword($word)
@@ -998,8 +999,8 @@ jQuery('dd.expanded2').show();
 
     </script>
 EOD;
+
 		echo '<div id="v2Filter">';
-			
 		if ($this->states->isStateSet('kategori') or
 			$this->states->isStateSet('farg') or 
 			$this->states->isStateSet('blomtid') or 
@@ -1256,7 +1257,7 @@ EOD;
 	function _showPlant($imageFilename, $latTitle, $sweTitle, $id)
 	{
 		$html = <<<EOD
-<div class="assortmentView2Category"><img class="assortmentView2Image" src="/wp-content/plantimages/ros.jpg" /><div style="height:35px;">
+<div class="assortmentView2Plant"><img class="assortmentView2Image" src="/wp-content/plantimages/ros.jpg" /><div style="height:35px;">
 		<span class="assortmentView2SweTitle">$sweTitle</span><br>
 		<span class="assortmentView2LatTitle">$latTitle</span>
 	</div>
