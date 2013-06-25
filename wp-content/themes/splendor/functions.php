@@ -102,13 +102,16 @@ function sp_view_kalender() {
     $args = array('post_type' => 'kalender', 'posts_per_page' => 4);
     $loop = new WP_Query($args);
     if ($loop->have_posts()):
-      echo '<h3 id="calendar-list">Kalender<h3>';
+      echo '<div id="calendar-list">';
+      echo '<h3>Kalender<h3>';
       while ($loop->have_posts()) : $loop->the_post();
-        echo '<li>';
+        //print_r($post);
+        echo '<a href="'.$post->guid.'"><li>';
         echo '<h4>'. get_field('datum') .'</h4>';
         echo '<p>'. get_field('text') .'</p>';
-        echo '</li>';
+        echo '</li></a>';
       endwhile;
+      echo '</div>';
     endif;
     wp_reset_query();
   }
