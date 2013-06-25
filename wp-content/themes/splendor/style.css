@@ -148,29 +148,29 @@ div.col-full#footer p{font-family: Arial;font-size: 10px;}
 
 /* 2013-06-20, Magnus Strand, vy1 sortiment */
 .assortmentView1Category {
-  width:215px;
-  height:165px;
+  max-width:190px;
+  max-height:165px;
   float:left;
-  margin-right:10px;
-  margin-bottom:10px;
+  margin-right:13px;
+  margin-bottom:13px;
 }
 
 
 .assortmentView1TitleBox {
   color: white;
   background-color: rgb(0, 114, 186);
-  width: 211px;
+  width: 186px;
   height: 21px;
   padding: 2px;
 }
 
 /* 2013-06-20, Magnus Strand, vy2 sortiment */
-.assortmentView2Category {
-  width:150px;
-  height:185px;
-  float:left;
-  margin-right:20px;
-  margin-bottom:15px;
+.assortmentView2Plant {
+  width: 150px;
+  height: 200px;
+  float: left;
+  margin-right: 20px;
+  margin-bottom: 15px;
 }
 
 .assortmentView2Image {
@@ -219,6 +219,60 @@ dt { border-bottom:1px solid #ccc;  }
 .v2TypeTitle3 { font-weight:bold; color:black; }
 .v2TypeTitle5 { border-bottom:1px solid #ccc; text-indent:22px; margin:3px 3px 3px 10px; background-position:0 5px; background-image:url('images/rensa_allt.png'); background-repeat:no-repeat; }
 .v2TypeTitle { font-weight:bold; margin:24px 0 0; }
+
+/* 2013-06-25, Magnus Strand, vy3 sortimentfilter */
+
+.assortmentView3SweTitle {
+  font: 16px 'Arial'; 
+  color: black;
+}
+
+.assortmentView3LatTitle {
+  font: 12px 'Arial'; 
+  color: #afafaf;
+  font-style: italic;
+}
+
+#assortmentView3Main {
+	min-width: 600px;
+}
+
+#assortmentView3Col1 {
+	max-width: 380px;
+	margin-right: 20px;
+	float: left;
+}
+
+#assortmentView3Col2 {
+	width: 200px;
+	max-width: 550px;
+	float: left;
+}
+
+#assortmentView3PlantInfo, #assortmentView3StepByStep {
+	border-bottom: 1px solid #ccc;
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+}
+
+#assortmentView3SmallImages {
+	margin-bottom: 1em;
+}
+
+.assortmentView3SmallImage {
+	width: 120px;
+	height: auto;
+	margin-right: 10px;
+}
+
+#assortmentView3SmallImage3 { /* no margin on last small image*/
+	margin-right: 0;
+}
+
+body.page-template-page-sortiment-php div#sidebar {
+	/* max-width: 100px; */
+}
+
 
 
 
