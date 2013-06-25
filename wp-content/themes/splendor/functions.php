@@ -73,7 +73,7 @@ function sp_view_page_tree() {
       $children = wp_list_pages("title_li=&child_of=" . $post->ID . "&echo=0");
       $titlenamer = '<a href="' . get_page_link($post->post_parent) . '">' . get_the_title($post->post_parent) . '</a>';
     }
-    echo '<div id="page-list-nav"><h2>' . $titlenamer . '</h2>';
+    echo '<div id="page-list-nav"><h3>' . $titlenamer . '</h3>';
     if ($children) {
       echo '<ul>' . $children . '</ul>';
     }
@@ -137,6 +137,15 @@ function sp_create_post_type() {
       'labels' => array(
           'name' => __('visitkort'),
           'singular_name' => __('visitkort')
+      ),
+      'public' => true,
+      'has_archive' => false,
+          )
+  );
+  register_post_type('kalender', array(
+      'labels' => array(
+          'name' => __('kalender'),
+          'singular_name' => __('kalender')
       ),
       'public' => true,
       'has_archive' => false,
