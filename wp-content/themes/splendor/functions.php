@@ -103,7 +103,7 @@ function sp_view_kalender() {
     $loop = new WP_Query($args);
     if ($loop->have_posts()):
       echo '<div id="calendar-list">';
-      echo '<h3>Kalender<h3>';
+      echo '<h3>Kalender</h3>';
       while ($loop->have_posts()) : $loop->the_post();
         //print_r($post);
         echo '<a href="'.$post->guid.'"><li>';
