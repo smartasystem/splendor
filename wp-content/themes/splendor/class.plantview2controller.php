@@ -155,7 +155,7 @@ EOD;
        echo <<<EOD
 	<div id="main">
 EOD;
-        the_content();
+		echo '<h2>'.the_content().'</h2>';
         
         echo <<<EOD
     <div>
@@ -190,7 +190,7 @@ EOD;
 	{
         echo '<div id="main">';
 
-		the_content();
+		echo '<h2>'.the_content().'</h2>';
 
 		$this->_showView2SearchResult();
 		
