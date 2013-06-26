@@ -71,6 +71,7 @@ a.flex-prev, a.flex-next {
 .extra-h2{font-family: Arial; font-size:16px;font-weight: normal; color:#0c7ac0;margin-bottom: 1em;}
 #rep-recent-posts img{float:left;display: inline;border: 1px solid #E6E6E6;height: auto;padding: 3px;margin-right: 20px;}
 #rep-recent-posts li{margin:0 0 25px 0;display: block;overflow: hidden;}
+#rep-recent-posts h2 a{text-decoration: none;color:#000;}
 #rep-recent-posts a{text-decoration: underline;}
 
 
@@ -152,9 +153,11 @@ div.col-full#footer p{font-family: Arial;font-size: 14px;line-height: 21px;}
 .page-blogg-list{font-size: 16px;color:#0c7ac0;}
 .blogg-list {overflow: hidden;margin: 3% 0 1% 0;}
 .blogg-list h2{font-size: 25px;margin-bottom: 0;}
+.blogg-list h2 a{color: #000;}
 .blogg-list img{float:left;display: inline;}
 .blogg-list div{float:left;display: inline;width:45%;margin-left: 3%;}
 .blogg-list a{text-decoration: underline;}
+.woo-pagination{margin-top: 20px;}
 
 
 /* 2013-06-20, Magnus Strand, vy1 sortiment */

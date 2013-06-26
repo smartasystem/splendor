@@ -32,7 +32,7 @@ $page_template = woo_get_page_template();
       <?php
       woo_loop_before();
       echo '<h2 class="extra-h2">Senaste nytt från bloggen</h2>';
-      rep_display_post_excerpt_li(4);
+      rep_display_post_excerpt_li(3);
       woo_loop_after();
       ?>        
     </div><!-- /#main -->

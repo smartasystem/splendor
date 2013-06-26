@@ -31,7 +31,7 @@
 <div <?php post_class(); ?>>
 <?php
 	woo_post_inside_before();	
-	/* the_title( $title_before, $title_after );  */
+  the_title( $title_before, $title_after );
 ?>
 	<div class="entry">
 	    <?php

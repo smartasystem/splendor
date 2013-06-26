@@ -40,12 +40,11 @@ if ( have_posts() ) { $count = 0;
 		woo_get_template_part( 'content', get_post_type() );
 
 	} // End WHILE Loop
-  wp_reset_query();
 } else {
 	get_template_part( 'content', 'noposts' );
 } // End IF Statement
 
 woo_loop_after();
-
 woo_pagenav();
+wp_reset_query();   //krillo - reset is set down here to be able to preserve the pagination..
 ?>

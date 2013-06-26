@@ -52,12 +52,13 @@ function sp_display_modules() {
     sp_view_assortment_filter();
     $calendar = false;
   }
-  if($calendar) {
-    sp_view_calendar();
-  }
   if (is_single() || is_page('blogg') || is_archive()) {
     sp_view_categories();
+    $calendar = false;
   }
+  if($calendar) {
+    sp_view_calendar();
+  }  
 }
 
 function sp_searchfield_in_menu() {
@@ -142,9 +143,9 @@ function rep_display_post_excerpt_li($nbrposts, $nbrchar = 200) {
     echo <<<POST
 <li>
   {$img}
-  <h2>{$title}</h2>
+  <h2><a href="{$permalink}">{$title}</a></h2>
   <p>{$excerpt}</p>
-  <a href="{$permalink}">Läs mer &raquo;</a>
+  <a href="{$permalink}" >Läs mer &raquo;</a>
 </li>
 POST;
   }

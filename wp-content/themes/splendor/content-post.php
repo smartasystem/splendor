@@ -65,7 +65,7 @@ if ($woo_options['woo_post_content'] != 'content' AND !is_singular()){
     $excerpt = strip_tags($post->post_content);
     $excerpt = mb_substr($excerpt, 0, 300);
     $img = get_the_post_thumbnail($post->ID, 'medium');
-    echo '<h2>' . $title . '</h2>';
+    echo '<h2><a href="' . $permalink . '">' . $title . '</h2></a>';
     echo $img;
     echo '<div class="blogg-list-excerpt">';
     echo '<p>' . $excerpt . '</p>';
