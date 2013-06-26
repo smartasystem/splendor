@@ -60,18 +60,19 @@ a.flex-prev, a.flex-next {
 }
 #loopedSlider{margin-bottom:10px;}
 
+
+/*head*/
+#head-img {float: right;height: 30px;width: 240px;    position: relative;top: 20px;}
+
+
+
+
 /*blogg list front page*/
 .extra-h2{font-family: Arial; font-size:16px;font-weight: normal; color:#0c7ac0;margin-bottom: 1em;}
 #rep-recent-posts img{float:left;display: inline;border: 1px solid #E6E6E6;height: auto;padding: 3px;margin-right: 20px;}
 #rep-recent-posts li{margin:0 0 25px 0;display: block;overflow: hidden;}
 #rep-recent-posts a{text-decoration: underline;}
 
-/*
-body.home h2.title {margin-bottom: 0;}
-body.home h2.title a:link{font-family: Arial; font-size:12px;font-weight: bold;margin-bottom: 0;}
-body.home .post-meta {display:none;}
-body.home div.post {margin-bottom:0;}
-*/
 
 /*breadcrumbs*/
 .trail-before{display: none;}
@@ -108,6 +109,9 @@ body.home div.post {margin-bottom:0;}
 #calendar-list a:hover{color:#fff;}
 #calendar-list li{list-style: none;padding-left: 0;margin-bottom: 20px;}
 
+#sidebar .categories{padding: 5% 10% 5% 10%;}
+#sidebar .categories ul li a{color:#fff;}
+
 
 /*contact*/
 .contact-info-box{float:left;margin:30px 5% 0 0;}
@@ -128,7 +132,7 @@ div.col-full#footer {
     border-style: solid;
     border-width: 3px 0 0;
 }
-div.col-full#footer p{font-family: Arial;font-size: 10px;}
+div.col-full#footer p{font-family: Arial;font-size: 14px;line-height: 21px;}
 
 
 /*post  dissable some stuff in the default post view */
