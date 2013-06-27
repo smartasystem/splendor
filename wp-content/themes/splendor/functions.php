@@ -36,9 +36,30 @@ add_action('wp_enqueue_scripts', 'sp_scripts');
  */
 function sp_scripts() {
   wp_enqueue_script("jquery");
+  wp_register_script('main', get_bloginfo('stylesheet_directory') . '/js/jquery.main.js');  
+  wp_enqueue_script('main');  
 }
 
-add_action('woo_sidebar_inside_before', 'sp_searchfield_in_menu', 1);
+add_action('woo_sidebar_inside_before', 'sp_display_modules', 1);
+
+function sp_display_modules() {
+  $calendar = true;
+  sp_searchfield_in_menu();
+  if (is_page()) {
+    sp_view_page_tree();
+  }
+  if (is_page() and isset($_GET['vy']) and ($_GET['vy'] == 2)) { // only display filter on view 2
+    sp_view_assortment_filter();
+    $calendar = false;
+  }
+  if (is_single() || is_page('blogg') || is_archive()) {
+    sp_view_categories();
+    $calendar = false;
+  }
+  if($calendar) {
+    sp_view_calendar();
+  }  
+}
 
 function sp_searchfield_in_menu() {
   echo <<<EOD
@@ -57,64 +78,51 @@ function sp_searchfield_in_menu() {
 EOD;
 }
 
-add_action('woo_sidebar_inside_before', 'sp_view_page_tree', 2);
-
 function sp_view_page_tree() {
   global $post;
-  if (is_page()) {
-    if ($post->post_parent != 0) {
-      $forefather = end($post->ancestors);
-      $children = wp_list_pages("title_li=&child_of=" . $forefather . "&echo=0");
-      $titlenamer = '<a href="' . get_page_link($forefather) . '">' . get_the_title($forefather) . '</a>';
-      $slideshow_post_id = $forefather;
-    } else {
-      $children = wp_list_pages("title_li=&child_of=" . $post->ID . "&echo=0");
-      $titlenamer = '<a href="' . get_page_link($post->post_parent) . '">' . get_the_title($post->post_parent) . '</a>';
-    }
-    if ($children) {
-      echo '<div id="page-list-nav"><h3>' . $titlenamer . '</h3>';
-      echo '<ul>' . $children . '</ul>';
-      echo '</div>';
-    }
+  if ($post->post_parent != 0) {
+    $forefather = end($post->ancestors);
+    $children = wp_list_pages("title_li=&child_of=" . $forefather . "&echo=0");
+    $titlenamer = '<a href="' . get_page_link($forefather) . '">' . get_the_title($forefather) . '</a>';
+    $slideshow_post_id = $forefather;
+  } else {
+    $children = wp_list_pages("title_li=&child_of=" . $post->ID . "&echo=0");
+    $titlenamer = '<a href="' . get_page_link($post->post_parent) . '">' . get_the_title($post->post_parent) . '</a>';
   }
-  if (is_single()) {
-    echo 'Bloggen';
+  if ($children) {
+    echo '<div id="page-list-nav"><h3>' . $titlenamer . '</h3>';
+    echo '<ul>' . $children . '</ul>';
+    echo '</div>';
   }
 }
 
-add_action('woo_sidebar_inside_before', 'sp_view_assortment_filter', 4);
+function sp_view_calendar() {
+  global $post;
+  $args = array('post_type' => 'kalender', 'posts_per_page' => 4);
+  $loop = new WP_Query($args);
+  if ($loop->have_posts()):
+    echo '<div id="calendar-list">';
+    echo '<h3>Kalender</h3>';
+    while ($loop->have_posts()) : $loop->the_post();
+      //print_r($post);
+      echo '<a href="' . $post->guid . '"><li>';
+      echo '<h4>' . get_field('datum') . '</h4>';
+      echo '<p>' . get_field('text') . '</p>';
+      echo '</li></a>';
+    endwhile;
+    echo '</div>';
+  endif;
+  wp_reset_query();
+}
 
 function sp_view_assortment_filter() {
-	if (is_page() and isset($_GET['vy']) and ($_GET['vy'] == 2)) { // only display filter on view 2
-		require_once 'class.plantview2controller.php';
-		$controller = new PlantView2Controller();
-        $controller->_showFilter();
-  }
+    require_once 'class.plantview2controller.php';
+    $controller = new PlantView2Controller();
+    $controller->_showFilter();
 }
 
-
-add_action('woo_sidebar_inside_before', 'sp_view_kalender', 3);
-
-function sp_view_kalender() {
-  global $post;
-
-  if (is_page()) {
-    $args = array('post_type' => 'kalender', 'posts_per_page' => 4);
-    $loop = new WP_Query($args);
-    if ($loop->have_posts()):
-      echo '<div id="calendar-list">';
-      echo '<h3>Kalender<h3>';
-      while ($loop->have_posts()) : $loop->the_post();
-        //print_r($post);
-        echo '<a href="'.$post->guid.'"><li>';
-        echo '<h4>'. get_field('datum') .'</h4>';
-        echo '<p>'. get_field('text') .'</p>';
-        echo '</li></a>';
-      endwhile;
-      echo '</div>';
-    endif;
-    wp_reset_query();
-  }
+function sp_view_categories() {
+  wp_list_categories('title_li=<h3>Bloggkategorier</h3>');
 }
 
 /**
@@ -135,9 +143,9 @@ function rep_display_post_excerpt_li($nbrposts, $nbrchar = 200) {
     echo <<<POST
 <li>
   {$img}
-  <h2>{$title}</h2>
+  <h2><a href="{$permalink}">{$title}</a></h2>
   <p>{$excerpt}</p>
-  <a href="{$permalink}">Läs mer &raquo;</a>
+  <a href="{$permalink}" >Läs mer &raquo;</a>
 </li>
 POST;
   }
@@ -147,7 +155,7 @@ POST;
 add_action('woo_sidebar_before', 'sp_breadcrumbs', 10);
 
 function sp_breadcrumbs() {
-  if (!is_home()) {
+  if (!is_front_page()) {
     woo_breadcrumbs();
   }
 }

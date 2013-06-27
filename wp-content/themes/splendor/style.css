@@ -60,25 +60,27 @@ a.flex-prev, a.flex-next {
 }
 #loopedSlider{margin-bottom:10px;}
 
+
+/*head*/
+#head-img {float: right;height: 30px;width: 240px;    position: relative;top: 20px;}
+
+
+
+
 /*blogg list front page*/
 .extra-h2{font-family: Arial; font-size:16px;font-weight: normal; color:#0c7ac0;margin-bottom: 1em;}
 #rep-recent-posts img{float:left;display: inline;border: 1px solid #E6E6E6;height: auto;padding: 3px;margin-right: 20px;}
 #rep-recent-posts li{margin:0 0 25px 0;display: block;overflow: hidden;}
+#rep-recent-posts h2 a{text-decoration: none;color:#000;}
 #rep-recent-posts a{text-decoration: underline;}
 
-/*
-body.home h2.title {margin-bottom: 0;}
-body.home h2.title a:link{font-family: Arial; font-size:12px;font-weight: bold;margin-bottom: 0;}
-body.home .post-meta {display:none;}
-body.home div.post {margin-bottom:0;}
-*/
 
 /*breadcrumbs*/
 .trail-before{display: none;}
 
 /*sidebar*/
-#main-sidebar-container #sidebar{background-color: #8eb429;color:#fff;}
-#main-sidebar-container #sidebar h3, #main-sidebar-container #sidebar h3 a{color:#fff;font-size: 16px; font-weight: normal;margin-top: 5px;margin-bottom: 10px;border-bottom: #fff solid 1px;}
+#main-sidebar-container #sidebar{background-color: #a2c037;color:#fff;}
+#main-sidebar-container #sidebar h3, #main-sidebar-container #sidebar h3 a{color:#fff;font-size: 16px; font-weight: normal;margin-top: 5px;margin-bottom: 15px;border-bottom: #fff solid 1px;}
 .widget{margin:10% 20% 10% 10%;}
 .widget h3{padding-bottom: 2px;}
 .widget ul{padding-top: 8px;}
@@ -97,10 +99,20 @@ body.home div.post {margin-bottom:0;}
 
 #page-list-nav{padding: 5% 10% 5% 10%;}
 #page-list-nav h3{border-bottom: #fff solid 1px;}
+#main-sidebar-container #sidebar #page-list-nav h3 a{border-bottom: none;}
 #page-list-nav ul li.page_item{}
 #page-list-nav ul li.page_item a{color:#fff;padding-left:10px;text-transform: uppercase; font-size: 11px;}
 
+/*calendar*/
 #calendar-list{padding: 5% 10% 5% 10%;}
+#calendar-list a h4{color:#fff;font-size: 13px;font-weight: bold;}
+#calendar-list a p{color:#fff;}
+#calendar-list a:hover{color:#fff;}
+#calendar-list li{list-style: none;padding-left: 0;margin-bottom: 20px;}
+
+#sidebar .categories{padding: 5% 10% 5% 10%;}
+#sidebar .categories ul li a{color:#fff;}
+
 
 /*contact*/
 .contact-info-box{float:left;margin:30px 5% 0 0;}
@@ -121,7 +133,7 @@ div.col-full#footer {
     border-style: solid;
     border-width: 3px 0 0;
 }
-div.col-full#footer p{font-family: Arial;font-size: 10px;}
+div.col-full#footer p{font-family: Arial;font-size: 14px;line-height: 21px;}
 
 
 /*post  dissable some stuff in the default post view */
@@ -139,11 +151,13 @@ div.col-full#footer p{font-family: Arial;font-size: 10px;}
 
 /*blogglising*/
 .page-blogg-list{font-size: 16px;color:#0c7ac0;}
-.blogg-list {overflow: hidden;margin: 3%; 0 1% 0;}
+.blogg-list {overflow: hidden;margin: 3% 0 1% 0;}
 .blogg-list h2{font-size: 25px;margin-bottom: 0;}
+.blogg-list h2 a{color: #000;}
 .blogg-list img{float:left;display: inline;}
 .blogg-list div{float:left;display: inline;width:45%;margin-left: 3%;}
 .blogg-list a{text-decoration: underline;}
+.woo-pagination{margin-top: 20px;}
 
 
 /* 2013-06-20, Magnus Strand, vy1 sortiment */
