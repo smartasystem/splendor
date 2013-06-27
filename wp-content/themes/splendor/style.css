@@ -17,6 +17,8 @@ Template: canvas
 body #header{padding:0 0 10px 0;}
 
 #navigation {
+  background-image: url(images/menu_bg.png);
+  background-color: #54A73E;
   background: -webkit-linear-gradient(#54A73E, #008B45);
   background: -moz-linear-gradient(#54A73E, #008B45);
   background: -o-linear-gradient(#54A73E, #008B45);
