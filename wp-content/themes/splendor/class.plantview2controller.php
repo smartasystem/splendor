@@ -208,6 +208,26 @@ EOD;
 		}
 
 		echo <<<EOD
+<script>
+
+function doImageClick(imageURL, imageIndex, numImages)
+{
+	var x = document.getElementById('assortmentView3MainImage');
+	x.src = imageURL;
+	
+	for (i = 1; i <= numImages; i++) {
+		var y = document.getElementById('assortmentView3SmallImage'+i);
+		if (i == imageIndex) {
+			y.className = "assortmentView3SmallImageSelected";
+		} else {
+			y.className = "assortmentView3SmallImageNotSelected";
+		}
+	}
+}
+
+</script>
+EOD;
+		echo <<<EOD
 <div id="main">
 	<div id="assortmentView3TitleBox">
 		<span class="assortmentView3SweTitle">$svensktNamn</span><br>
@@ -228,7 +248,7 @@ EOD;
 				$class = "assortmentView3SmallImageSelected";
 			else
 				$class = "assortmentView3SmallImageNotSelected";
-			echo "<img id=\"assortmentView3SmallImage$index\" class=\"assortmentView3SmallImage $class\" src=\"/wp-content/plantimages/ros.jpg\" style=\"cursor:pointer\" onclick=\"doImageClick('images/article/stora/$filename', $index, $numImages)\" />";
+			echo "<img id=\"assortmentView3SmallImage$index\" class=\"assortmentView3SmallImage $class\" src=\"/wp-content/plantimages/ros.jpg\" style=\"cursor:pointer\" onclick=\"doImageClick('/wp-content/plantimages/ros2.jpg', $index, $numImages)\" />";
 			$firstImage = false;
 			$index++;
 		}
