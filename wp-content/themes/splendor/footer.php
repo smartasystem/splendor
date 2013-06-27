@@ -46,7 +46,7 @@ woo_footer_before();
   </div>
 
   <div id="credit" class="col-right">
-    <p><a href="<?php echo get_permalink(get_page_by_path('kontakta-oss')) ?>">Kontakta oss</a> | <a href="<?php echo get_permalink(get_page_by_path('om-oss')) ?>">Om oss</a> | <a href="<?php echo get_permalink(get_page_by_path('jobba-hos-oss')) ?>">Jobba hos oss</a></p>
+    <p><a href="<?php echo get_permalink(get_page_by_path('kontakta-oss')) ?>">Kontakta oss</a> | <a href="<?php echo get_permalink(get_page_by_path('om-oss')) ?>">Om oss</a> | <a href="<?php echo get_permalink(get_page_by_path('om-oss/jobba-hos-oss')) ?>">Jobba hos oss</a></p>
   </div>
 
 </div><!-- /#footer  -->
