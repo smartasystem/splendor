@@ -166,10 +166,10 @@ div.col-full#footer p{font-family: Arial;font-size: 10px;}
 
 /* 2013-06-20, Magnus Strand, vy2 sortiment */
 .assortmentView2Plant {
-  width: 150px;
+  width: 140px;
   height: 200px;
   float: left;
-  margin-right: 2px;
+  margin-right: 12px;
   margin-bottom: 15px;
 }
 
