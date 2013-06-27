@@ -180,10 +180,10 @@ div.col-full#footer p{font-family: Arial;font-size: 14px;line-height: 21px;}
 
 /* 2013-06-20, Magnus Strand, vy2 sortiment */
 .assortmentView2Plant {
-  width: 150px;
+  width: 140px;
   height: 200px;
   float: left;
-  margin-right: 2px;
+  margin-right: 12px;
   margin-bottom: 15px;
 }
 
@@ -207,7 +207,7 @@ div.col-full#footer p{font-family: Arial;font-size: 14px;line-height: 21px;}
 #v2CurrentFilter { margin-bottom: 30px; }
 #v2CurrentFilter a { margin:0; }
 #v2TypeFilter { padding-bottom:10px; }
-#v2TypeFilter dt { background-image:url('images/plus.png'); background-repeat:no-repeat; background-position:0px 4px; }
+#v2TypeFilter dt { background-image:url('images/plus.png'); background-repeat:no-repeat; background-position:0px 7px; }
 #v2TypeFilter dt.expanded { background-image:url('images/minus.png'); }
 #v2TypeFilter dt p { text-indent:10px; margin:0; }
 #v2TypeFilter dd p { text-indent:20px; margin:0; font-size: 85%; }
@@ -230,7 +230,7 @@ div.v2FilterHeader a p {
 .v2TypeTitle4 {
 	text-indent:22px;
 	margin:3px 3px 3px 10px;
-	background-position:0 5px;
+	background-position:0 2px;
 	background-image:url('images/rensa.png');
 	background-repeat:no-repeat;
 	color: white;
@@ -241,14 +241,19 @@ div.v2FilterHeader a p {
 .v2TypeTitle5 { 
 	text-indent:22px;
 	margin:3px 3px 3px 10px;
-	background-position:0 5px;
+	background-position:0 2px;
 	background-image:url('images/rensa_allt.png');
 	background-repeat:no-repeat;
 }
 
-.v2TypeTitle { font-weight:bold; margin:24px 0 0; }
+.v2TypeTitle { text-indent: 14px; font-weight:bold; margin:24px 0 0; }
 
 /* 2013-06-25, Magnus Strand, vy3 sortimentfilter */
+
+#assortmentView3TitleBox {
+	position: relative;
+	top: -4px;
+}
 
 .assortmentView3SweTitle {
   font: 16px 'Arial'; 
@@ -262,18 +267,18 @@ div.v2FilterHeader a p {
 }
 
 #assortmentView3Main {
-	min-width: 600px;
+	min-width: 64%;
 }
 
 #assortmentView3Col1 {
-	max-width: 380px;
-	margin-right: 20px;
+	max-width: 60%;
+	margin-right: 6%;
 	float: left;
 }
 
 #assortmentView3Col2 {
-	width: 200px;
-	max-width: 550px;
+	width: 33%;
+	max-width: 33%;
 	float: left;
 }
 
@@ -287,15 +292,24 @@ div.v2FilterHeader a p {
 	margin-bottom: 1em;
 }
 
-.assortmentView3SmallImage {
-	width: 120px;
-	height: auto;
-	margin-right: 10px;
-}
-
 #assortmentView3SmallImage3 { /* no margin on last small image*/
 	margin-right: 0;
 }
+
+.assortmentView3SmallImageSelected {
+	width: 100px;
+	height: auto;
+	margin-right: 10px;
+	padding: 5px; border: 5px solid #ccc;
+}
+
+.assortmentView3SmallImageNotSelected {
+	width: 100px;
+	height: auto;
+	margin-right: 10px;
+	padding: 5px; border: 5px solid transparent;
+}
+
 
 body.page-template-page-sortiment-php div#sidebar {
 	/* max-width: 100px; */
