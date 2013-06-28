@@ -149,7 +149,7 @@ EOD;
 		echo '<div id="main">';
 		echo the_content();
 
-		echo '<div>';
+		echo '<div id="assortmentView1CategoriesBox">';
 
 
 		// show categories
@@ -184,12 +184,10 @@ EOD;
 		$cat = $catList->getValue($catIndex);
 		echo <<<EOD
 			<div class="assortmentView2Category">
-				<div class="assortmentView2CategoryTitleBox">$cat</div>
+				<div class="assortmentView2CategoryTitleBox"><h1>$cat</h1></div>
 				<div>
 					<div id="assortmentView2CategoryImage"><img src="/wp-content/categoryimages/1.jpg" /></div>
-					<div id="assortmentView2CategoryText">
-					Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum 
-					</div>
+					<div id="assortmentView2CategoryText">$cat beskrivning</div>
 				</div>
 				<div class="fix"></div>
 			</div>
@@ -199,8 +197,6 @@ EOD;
 	
 	function _showView2() {
 		echo '<div id="main">';
-
-		echo the_content();
 
 		$this->_showView2Category();
 		$this->_showView2SearchResult();
@@ -259,6 +255,10 @@ EOD;
 			if ($this->_imageExists($filename))
 				$filenames2[] = $filename;
 		}
+		if (count($filenames2) == 0) {
+			$filenames2[] = 'ros.jpg';
+		}
+		
 		$filename1 = '';
 		if (count($filenames2) > 0)
 			$filename1 = $filenames2[0];
@@ -1239,24 +1239,21 @@ EOD;
 
 		echo <<<EOD
 <div>
-<div>DET FINNS $numRecords PRODUKTER</div>
+<div id="assortmentView2ProductCount">DET FINNS $numRecords PRODUKTER</div>
 EOD;
-		echo '<div><div id="v2Sort"><ul><span>Sortera på: </span>';
+		echo '<div><div id="v2Sort"><span>SORTERA&nbsp;&nbsp;&nbsp;</span>';
 		if ($this->states->getState('sortering') != 2) // state is already set, no link
-			echo '<li class="selected">Svenskt namn';
+			echo 'Svenskt namn';
 		else {
-			echo '<li>';
 			$this->_echoSetLink('sortering', 1, 'Svenskt namn');
 		}
-		echo '</li>';
+		echo '&nbsp;&nbsp;';
 		if ($this->states->getState('sortering') == 2) // state is already set, no link
-			echo '<li class="selected">Latinskt namn';
+			echo 'Latinskt namn';
 		else {
-			echo '<li>';
 			$this->_echoSetLink('sortering', 2, 'Latinskt namn');
 		}
-		echo '</li>';
-		echo '</ul></div>';
+		echo '</div>';
 
 		echo '<div style="float:right">';
 		$this->_showView2Pagination($offset, $numPages, $pageSize);
