@@ -238,7 +238,7 @@ EOD;
 		$hardighet = htmlspecialchars($row->D030_Skylttext_Hardighet);
 		$vaxtkod = htmlspecialchars($row->C001_Vaxtkod);
 		
-		$sql2 = "SELECT C001_Bildnamn FROM sp_bild WHERE B002_VaxtID='$vaxtkod'";
+		$sql2 = "SELECT DISTINCT C001_Bildnamn FROM sp_bild WHERE B002_VaxtID='$vaxtkod' LIMIT 0,3";
 		$rows2 = $wpdb->get_results($sql2);
 		if ($rows2 === FALSE) {
 			echo "Databasfel! (query2 fel)";
@@ -256,12 +256,10 @@ EOD;
 				$filenames2[] = $filename;
 		}
 		if (count($filenames2) == 0) {
-			$filenames2[] = 'ros.jpg';
+			$filenames2[] = 'dummy.png';
 		}
 		
-		$filename1 = '';
-		if (count($filenames2) > 0)
-			$filename1 = $filenames2[0];
+		$filename1 = $filenames2[0];
 		
 		echo <<<EOD
 <script>
@@ -283,6 +281,10 @@ function doImageClick(imageURL, imageIndex, numImages)
 
 </script>
 EOD;
+		$numImages = count($filenames2);
+		$moreImagesText = '';
+		if ($numImages > 1)
+			$moreImagesText = '<strong>FLER BILDER:</strong>';
 		echo <<<EOD
 <div id="main">
 	<div id="assortmentView3TitleBox">
@@ -292,21 +294,22 @@ EOD;
 	<div id="assortmentView3Main">
 		<div id="assortmentView3Col1">
 			<img id="assortmentView3MainImage" src="/wp-content/plantimages/$filename1">
-			<strong>FLER BILDER:</strong>
+			$moreImagesText
 			<div id="assortmentView3SmallImages">
 EOD;
 
 		$firstImage = true;
 		$index = 1;
-		$numImages = count($filenames2);
-		foreach ($filenames2 as $filename) {
-			if ($firstImage)
-				$class = "assortmentView3SmallImageSelected";
-			else
-				$class = "assortmentView3SmallImageNotSelected";
-			echo "<img id=\"assortmentView3SmallImage$index\" class=\"assortmentView3SmallImage $class\" src=\"/wp-content/plantimages/$filename\" style=\"cursor:pointer\" onclick=\"doImageClick('/wp-content/plantimages/$filename', $index, $numImages)\" />";
-			$firstImage = false;
-			$index++;
+		if ($numImages > 1) {
+			foreach ($filenames2 as $filename) {
+				if ($firstImage)
+					$class = "assortmentView3SmallImageSelected";
+				else
+					$class = "assortmentView3SmallImageNotSelected";
+				echo "<img id=\"assortmentView3SmallImage$index\" class=\"assortmentView3SmallImage $class\" src=\"/wp-content/plantimages/$filename\" style=\"cursor:pointer\" onclick=\"doImageClick('/wp-content/plantimages/$filename', $index, $numImages)\" />";
+				$firstImage = false;
+				$index++;
+			}
 		}
 		echo <<<EOD
 			</div><!-- end of #assortmentView3SmallImages -->
@@ -387,7 +390,7 @@ EOD;
 	}
 	
 	function _imageExists($filename) {
-		$pathname = "/Project/splendor/wp-content/plantimages/$filename"; // fixa
+		$pathname = "/home/u/u0718033/www/wp-content/plantimages/$filename"; // fixa
 		return file_exists($pathname); 
 	}
 
@@ -1224,7 +1227,7 @@ EOD;
 		$row = $rows[0];
 		$numRecords = $row->count1;
 
-		$sql2 = "SELECT B001_ID, C002_Latinskt_namn_langt, C006_Svenskt_namn_langt FROM sp_vaxt $where " .
+		$sql2 = "SELECT B001_ID, C001_Vaxtkod, C002_Latinskt_namn_langt, C006_Svenskt_namn_langt FROM sp_vaxt $where " .
 				"$orderBy " .
 				"LIMIT $offset,$pageSize";
 
@@ -1274,10 +1277,23 @@ EOD;
 
 		foreach ($rows as $row) {
 			$id = $row->B001_ID;
+			$vaxtkod = $row->C001_Vaxtkod;
+
+			$sql3 = "SELECT C001_Bildnamn FROM sp_bild WHERE B002_VaxtID='$vaxtkod' LIMIT 0,1";
+			$rows3 = $wpdb->get_results($sql3);
+			if ($rows3 === FALSE) {
+				echo "Databasfel! (query3 fel)";
+				return;
+			}
+			if (count($rows3) > 0)
+				$filename = $rows3[0]->C001_Bildnamn;
+			else
+				$filename = 'dummy.png';
+
 			$latinsktNamn = htmlspecialchars($row->C002_Latinskt_namn_langt);
 			$svensktNamn = htmlspecialchars($row->C006_Svenskt_namn_langt);
 
-			$this->_showPlant($id . '.jpg', $latinsktNamn, $svensktNamn, $id);
+			$this->_showPlant($filename, $latinsktNamn, $svensktNamn, $id);
 		}
 
 		echo <<<EOD
@@ -1336,7 +1352,7 @@ EOD;
 
 	function _showPlant($imageFilename, $latTitle, $sweTitle, $id) {
 		$html = <<<EOD
-<div class="assortmentView2Plant"><img class="assortmentView2Image" src="/wp-content/plantimages/ros.jpg" /><div style="height:35px;">
+<div class="assortmentView2Plant"><img class="assortmentView2Image" src="/wp-content/plantimages/$imageFilename" /><div style="height:35px;">
 		<span class="assortmentView2SweTitle">$sweTitle</span><br>
 		<span class="assortmentView2LatTitle">$latTitle</span>
 	</div>
