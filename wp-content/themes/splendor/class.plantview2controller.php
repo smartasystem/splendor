@@ -113,14 +113,12 @@ class PlantView2Controller extends AbstractController {
 
 	function _initCategories() {
 		$this->categories = array();
-		$this->categories['kategori'] = new Category('kategori', 'Typ', array('Bladväxter', 'Bra till snitt', 'Doftande', 'Gräs', 'Kryddväxter', 'Lättskötta', 'Marktäckare', 'Ormbunkar', 'Pioner',
-			'Stenparti', 'Trivs i kruka')
-		);
-		$this->categories['farg'] = new Category('farg', 'Färg', array('Vit', 'Gul', 'Grön', 'Blå', 'Lila', 'Purpur', 'Rosa', 'Röd', 'Brun', 'Orange', 'Blandade'));
+		$this->categories['kategori'] = new Category('kategori', 'Typ', array('Frukt & Bär', 'Rosor', 'Träd & Buskar', 'Klätterväxter', 'Barrväxter', 'Perenner'));
+		/* $this->categories['farg'] = new Category('farg', 'Färg', array('Vit', 'Gul', 'Grön', 'Blå', 'Lila', 'Purpur', 'Rosa', 'Röd', 'Brun', 'Orange', 'Blandade'));
 		$this->categories['blomtid'] = new Category('blomtid', 'Blomtid', array('Vår', 'Sommar', 'Höst'));
 		$this->categories['hojd'] = new Category('hojd', 'Höjd', array('Låga', 'Mellan', 'Höga'));
 		$this->categories['lage'] = new Category('lage', 'Läge', array('Sol', 'Halvskugga', 'Skugga'));
-		$this->categories['jordman'] = new Category('jordman', 'Jordmån', array('Torr', 'Fuktig', 'Väldränerad'));
+		$this->categories['jordman'] = new Category('jordman', 'Jordmån', array('Torr', 'Fuktig', 'Väldränerad')); */
 	}
 
 	function _showView1Category($name, $value, $imageFilename) {
@@ -133,43 +131,74 @@ EOD;
 		$newStates->echoLink($html, $this->_pageID);
 	}
 
+	function _getCategoryPicFilename($index) {
+		$categoryPicFilenames = array('1.jpg', '2.jpg', '3.jpg',
+			'4.jpg', '5.jpg', '6.jpg'
+		);
+
+		if ($index < 1)
+			return '';
+		
+		if ($index > count($categoryPicFilenames))
+			return '';
+		
+		return $categoryPicFilenames[$index-1];
+	}
+	
 	function _showView1() {
 		echo '<div id="main">';
 		echo the_content();
 
-		echo '<div>';
+		echo '<div id="assortmentView1CategoriesBox">';
 
 
-		// show Alla perenner-category		
-		$html = '<div class="assortmentView1Category"><img src="/wp-content/categoryimages/1.jpg" /><div class="assortmentView1TitleBox">Alla perenner</div></div>';
-		$newStates = new States($this->stateNames, false);
-		$newStates->setState('vy', 2);
-		$newStates->echoLink($html, $this->_pageID);
-
-		$categoryFilenames = array('1.jpg', '1.jpg', '1.jpg',
-			'1.jpg', '1.jpg', '1.jpg', '1.jpg',
-			'1.jpg', '1.jpg', '1.jpg', '1.jpg'
-		);
-
+		// show categories
 		$category = $this->categories['kategori'];
 		$n = $category->getNumValues();
 		for ($i = 1; $i <= $n; $i++)
-			$this->_showView1Category($category->getValue($i), $i, $categoryFilenames[$i - 1]);
+			$this->_showView1Category($category->getValue($i), $i, $this->_getCategoryPicFilename($i));
 
 		echo <<<EOD
-    <div class="clear"></div>
-    </div>
-</div>
+			<div class="clear"></div>
+		</div>
+		</div>
 EOD;
 
 		get_sidebar();
 	}
 
+	function _showView2Category() {
+		if (!($this->states->isStateSet('kategori'))) // check if we have a category to display
+			return;
+		
+		$catList = $this->categories['kategori'];
+
+		$catIndex = intval($this->states->getState('kategori'));
+		if ($catIndex < 1)
+			$catIndex = 1;
+		if ($catIndex > $catList->getNumValues())
+			$catIndex = $catList->getNumValues();
+		
+		$picFilename = $this->_getCategoryPicFilename($catIndex); // fixa use this var below
+		
+		$cat = $catList->getValue($catIndex);
+		echo <<<EOD
+			<div class="assortmentView2Category">
+				<div class="assortmentView2CategoryTitleBox"><h1>$cat</h1></div>
+				<div>
+					<div id="assortmentView2CategoryImage"><img src="/wp-content/categoryimages/1.jpg" /></div>
+					<div id="assortmentView2CategoryText">$cat beskrivning</div>
+				</div>
+				<div class="fix"></div>
+			</div>
+		
+EOD;
+	}
+	
 	function _showView2() {
 		echo '<div id="main">';
 
-		echo the_content();
-
+		$this->_showView2Category();
 		$this->_showView2SearchResult();
 
 		echo '<div class="clear"></div>';
@@ -184,7 +213,9 @@ EOD;
 
 		$artikelID = sanitizeInt($_GET['artikelID']);
 
-		$sql = "SELECT latinsktNamn, svensktNamn FROM artikel WHERE id=$artikelID";
+		$sql = "SELECT C001_Vaxtkod, C002_Latinskt_namn_langt, C006_Svenskt_namn_langt, C029_Vaxtbeskrivning_katalog, ".
+				"D026_Skylttext_vaxtsatt_anvandning, D027_Skylttext_Utseende, D028_Skylttext_Storlek, ".
+				"D029_Skylttext_Vaxtlage, D030_Skylttext_Hardighet FROM sp_vaxt WHERE B001_ID=$artikelID";
 
 		$rows = $wpdb->get_results($sql);
 		if ($rows === FALSE) {
@@ -197,16 +228,39 @@ EOD;
 		}
 		$row = $rows[0];
 
-		$latinsktNamn = htmlspecialchars($row->latinsktNamn);
-		$svensktNamn = htmlspecialchars($row->svensktNamn);
+		$latinsktNamn = htmlspecialchars($row->C002_Latinskt_namn_langt);
+		$svensktNamn = htmlspecialchars($row->C006_Svenskt_namn_langt);
+		$vaxtbeskrivning = htmlspecialchars($row->C029_Vaxtbeskrivning_katalog);
+		$vaxtsatt = htmlspecialchars($row->D026_Skylttext_vaxtsatt_anvandning);
+		$utseende = htmlspecialchars($row->D027_Skylttext_Utseende);
+		$storlek = htmlspecialchars($row->D028_Skylttext_Storlek);
+		$vaxtlage = htmlspecialchars($row->D029_Skylttext_Vaxtlage);
+		$hardighet = htmlspecialchars($row->D030_Skylttext_Hardighet);
+		$vaxtkod = htmlspecialchars($row->C001_Vaxtkod);
+		
+		$sql2 = "SELECT DISTINCT C001_Bildnamn FROM sp_bild WHERE B002_VaxtID='$vaxtkod' LIMIT 0,3";
+		$rows2 = $wpdb->get_results($sql2);
+		if ($rows2 === FALSE) {
+			echo "Databasfel! (query2 fel)";
+			return;
+		}
 
-		$filenames = array("$artikelID.jpg", "$artikelID-1.jpg", "$artikelID-2.jpg");
+		$filenames = array();
+		foreach ($rows2 as $row2) {
+			$filenames[] = $row2->C001_Bildnamn;
+		}
+		
 		$filenames2 = array();
 		foreach ($filenames as $filename) {
 			if ($this->_imageExists($filename))
 				$filenames2[] = $filename;
 		}
-
+		if (count($filenames2) == 0) {
+			$filenames2[] = 'dummy.png';
+		}
+		
+		$filename1 = $filenames2[0];
+		
 		echo <<<EOD
 <script>
 
@@ -227,6 +281,10 @@ function doImageClick(imageURL, imageIndex, numImages)
 
 </script>
 EOD;
+		$numImages = count($filenames2);
+		$moreImagesText = '';
+		if ($numImages > 1)
+			$moreImagesText = '<strong>FLER BILDER:</strong>';
 		echo <<<EOD
 <div id="main">
 	<div id="assortmentView3TitleBox">
@@ -235,63 +293,105 @@ EOD;
 	</div>
 	<div id="assortmentView3Main">
 		<div id="assortmentView3Col1">
-			<img id="assortmentView3MainImage" src="/wp-content/plantimages/ros.jpg">
-			<strong>FLER BILDER:</strong>
+			<img id="assortmentView3MainImage" src="/wp-content/plantimages/$filename1">
+			$moreImagesText
 			<div id="assortmentView3SmallImages">
 EOD;
 
 		$firstImage = true;
 		$index = 1;
-		$numImages = count($filenames2);
-		foreach ($filenames2 as $filename) {
-			if ($firstImage)
-				$class = "assortmentView3SmallImageSelected";
-			else
-				$class = "assortmentView3SmallImageNotSelected";
-			echo "<img id=\"assortmentView3SmallImage$index\" class=\"assortmentView3SmallImage $class\" src=\"/wp-content/plantimages/ros.jpg\" style=\"cursor:pointer\" onclick=\"doImageClick('/wp-content/plantimages/ros2.jpg', $index, $numImages)\" />";
-			$firstImage = false;
-			$index++;
+		if ($numImages > 1) {
+			foreach ($filenames2 as $filename) {
+				if ($firstImage)
+					$class = "assortmentView3SmallImageSelected";
+				else
+					$class = "assortmentView3SmallImageNotSelected";
+				echo "<img id=\"assortmentView3SmallImage$index\" class=\"assortmentView3SmallImage $class\" src=\"/wp-content/plantimages/$filename\" style=\"cursor:pointer\" onclick=\"doImageClick('/wp-content/plantimages/$filename', $index, $numImages)\" />";
+				$firstImage = false;
+				$index++;
+			}
 		}
 		echo <<<EOD
 			</div><!-- end of #assortmentView3SmallImages -->
 			<div id="assortmentView3Tips">
 				<h2 class="extra-h2">Trådgärdsmästarens tips</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum est est, fringilla laoreet pretium et, mollis vel lorem.
-	Vivamus vel eros volutpat, fringilla lorem a, convallis mi. Vivamus felis erat, commodo et blandit vel, eleifend et turpis.
-	Morbi volutpat vel magna a ornare. In hac habitasse platea dictumst.</p>
+<p>-</p>
 			</div><!-- end of #assortmentView3Tips -->
 		</div><!-- end of #assortmentView3Col1 -->
 		<div id="assortmentView3Col2">
 			<div id="assortmentView3PlantInfo">
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum est est, fringilla laoreet pretium et, mollis vel lorem.
-	Vivamus vel eros volutpat, fringilla lorem a, convallis mi. Vivamus felis erat, commodo et blandit vel, eleifend et turpis.
-	Morbi volutpat vel magna a ornare. In hac habitasse platea dictumst.</p>
-<p>Praesent felis neque, volutpat in lacus sit amet, tristique venenatis urna.</p>
-<p>Donec eleifend nibh ac adipiscing molestie. Fusce dictum nec orci at cursus.</p>
-<strong>VÄXTSÄTT:</strong><br>
-<strong>UTSEENDE:</strong><br>
-<strong>STORLEK:</strong>6-8 meter<br>
-<strong>VÄXTLÄGE:</strong><br>
-<strong>ZON (HÄRDIGHET):</strong>1-5<br>
+<p>$vaxtbeskrivning</p>
+<strong>VÄXTSÄTT:</strong> $vaxtsatt<br>
+<strong>UTSEENDE:</strong> $utseende<br>
+<strong>STORLEK:</strong> $storlek<br>
+<strong>VÄXTLÄGE:</strong> $vaxtlage<br>
+<strong>ZON (HÄRDIGHET):</strong> $hardighet<br>
 			</div>	
 			<div id="assortmentView3StepByStep">
 				<strong>STEG FÖR STEG, SÅ HÄR GÖR DU:</strong>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum est est, fringilla laoreet pretium et, mollis vel lorem.
-	Vivamus vel eros volutpat, fringilla lorem a, convallis mi. Vivamus felis erat, commodo et blandit vel, eleifend et turpis.
-	Morbi volutpat vel magna a ornare. In hac habitasse platea dictumst.</p>
+<p>-</p>
 			</div>
 		</div>
 	</div><!-- end of #assortmentView3Main -->
 </div><!-- end of #main -->
 EOD;
 		get_sidebar();
+		
+		// $this->_randomPopulatePlantCategories();
 	}
 
-	function _imageExists($filename) {
-		// $pathname = "/home/u/u6443829/www/images/article/stora/$filename";
-		// return file_exists($pathname); 
+	function _randomPlantCategory($B001_ID)
+	{
+		$catList = $this->categories['kategori'];
+		
+		$numCats = rand(0, 6);
+		
+		$cats = array();
+		for ($i = 0; $i < $numCats; $i++) {
+			$cats[] = $catList->getValue(rand(1, $catList->getNumValues()));
+		}
+		
+		$catsText = implode('|', $cats);
+		if (strlen($catsText) != 0) {
+			$catsText = "|$catsText|";
+		}
+		
+		return $catsText;
+	}
+	
+	function _randomPopulatePlantCategory($B001_ID)
+	{
+		global $wpdb;
 
-		return true;
+		$cat = $this->_randomPlantCategory();
+		
+		$sql = "UPDATE sp_vaxt SET kategori='$cat' WHERE B001_ID=$B001_ID";	
+
+		$ok = $wpdb->query($sql);
+		
+		echo "ok=$ok<br>";
+	}
+	
+	function _randomPopulatePlantCategories()
+	{
+		global $wpdb;
+		
+		$sql = "SELECT B001_ID FROM sp_vaxt";
+
+		$rows = $wpdb->get_results($sql);
+		if ($rows === FALSE) {
+			echo "Databasfel! (query fel)";
+			return;
+		}
+		
+		foreach ($rows as $row) {
+			$this->_randomPopulatePlantCategory($row->B001_ID);
+		}
+	}
+	
+	function _imageExists($filename) {
+		$pathname = "/home/u/u0718033/www/wp-content/plantimages/$filename"; // fixa
+		return file_exists($pathname); 
 	}
 
 	function _isMySqlStopword($word) {
@@ -911,7 +1011,7 @@ EOD;
 			$where = 'WHERE ' . implode(' AND ', $whereParts);
 		}
 
-		$sql1 = "SELECT count(id) as count1 FROM artikel $where";
+		$sql1 = "SELECT count(B001_ID) as count1 FROM sp_vaxt $where";
 		$rows = $wpdb->get_results($sql1);
 		if ($rows === FALSE) {
 			echo "Databasfel! (query1 fel)";
@@ -990,12 +1090,12 @@ jQuery('dd.expanded2').show();
 EOD;
 
 		echo '<div id="v2Filter">';
-		if ($this->states->isStateSet('kategori') or
+		if ($this->states->isStateSet('kategori') /* or
 				$this->states->isStateSet('farg') or
 				$this->states->isStateSet('blomtid') or
 				$this->states->isStateSet('hojd') or
 				$this->states->isStateSet('lage') or
-				$this->states->isStateSet('jordman')) {
+				$this->states->isStateSet('jordman') */) {
 			echo '<div id="v2CurrentFilter">';
 
 			echo '<div class="v2FilterHeader"><h3>Nuvarande filtrering</h3></div>';
@@ -1032,13 +1132,13 @@ EOD;
 		$whereParts = array();
 
 		if ($states->isStateSet('kategori')) {
-			// filter by blomtid
+			// filter by kategori
 			$state = $states->getState('kategori');
 			$cat = $this->categories['kategori'];
 			$kategori = esc_sql($cat->getValue($state));
 			$whereParts[] = "kategori LIKE('%|$kategori|%')";
 		}
-
+/*
 		if ($states->isStateSet('blomtid')) {
 			// filter by blomtid
 			$state = $states->getState('blomtid');
@@ -1078,7 +1178,7 @@ EOD;
 			$jordman = esc_sql($cat->getValue($state));
 			$whereParts[] = "jordman LIKE('%|$jordman|%')";
 		}
-
+*/
 		return $whereParts;
 	}
 
@@ -1090,15 +1190,15 @@ EOD;
 		if (isset($_GET['sok'])) { // we are in text search mode
 			if ($_GET['sok'] != '') {
 				$str = $this->_makeSearchString($_GET['sok']);
-				$whereParts[] = $wpdb->prepare("MATCH(latinsktNamn, svensktNamn, idText) AGAINST(%s IN BOOLEAN MODE)", $str);
+				$whereParts[] = $wpdb->prepare("MATCH(C002_Latinskt_namn_langt, C006_Svenskt_namn_langt) AGAINST(%s IN BOOLEAN MODE)", $str);
 			}
 		} else { // we are in filter search mode
 			$whereParts = $this->_buildWhere($this->states);
 		}
 
-		$orderBy = 'ORDER BY svensktNamn';
+		$orderBy = 'ORDER BY C006_Svenskt_namn_langt';
 		if ($this->states->isStateSet('sortering') and $this->states->getState('sortering') == '2')
-			$orderBy = 'ORDER BY latinsktNamn';
+			$orderBy = 'ORDER BY C002_Latinskt_namn_langt';
 
 
 		// build where
@@ -1114,7 +1214,7 @@ EOD;
 		if (empty($offset))
 			$offset = 0;
 
-		$sql1 = "SELECT count(id) as count1 FROM artikel $where";
+		$sql1 = "SELECT count(B001_ID) as count1 FROM sp_vaxt $where";
 		$rows = $wpdb->get_results($sql1);
 		if ($rows === FALSE) {
 			echo "Databasfel! (query1 fel)";
@@ -1127,7 +1227,7 @@ EOD;
 		$row = $rows[0];
 		$numRecords = $row->count1;
 
-		$sql2 = "SELECT id, latinsktNamn, svensktNamn, hojd, blomtid FROM artikel $where " .
+		$sql2 = "SELECT B001_ID, C001_Vaxtkod, C002_Latinskt_namn_langt, C006_Svenskt_namn_langt FROM sp_vaxt $where " .
 				"$orderBy " .
 				"LIMIT $offset,$pageSize";
 
@@ -1142,24 +1242,21 @@ EOD;
 
 		echo <<<EOD
 <div>
-<div>DET FINNS $numRecords PRODUKTER</div>
+<div id="assortmentView2ProductCount">DET FINNS $numRecords PRODUKTER</div>
 EOD;
-		echo '<div><div id="v2Sort"><ul><span>Sortera på: </span>';
+		echo '<div><div id="v2Sort"><span>SORTERA&nbsp;&nbsp;&nbsp;</span>';
 		if ($this->states->getState('sortering') != 2) // state is already set, no link
-			echo '<li class="selected">Svenskt namn';
+			echo 'Svenskt namn';
 		else {
-			echo '<li>';
 			$this->_echoSetLink('sortering', 1, 'Svenskt namn');
 		}
-		echo '</li>';
+		echo '&nbsp;&nbsp;';
 		if ($this->states->getState('sortering') == 2) // state is already set, no link
-			echo '<li class="selected">Latinskt namn';
+			echo 'Latinskt namn';
 		else {
-			echo '<li>';
 			$this->_echoSetLink('sortering', 2, 'Latinskt namn');
 		}
-		echo '</li>';
-		echo '</ul></div>';
+		echo '</div>';
 
 		echo '<div style="float:right">';
 		$this->_showView2Pagination($offset, $numPages, $pageSize);
@@ -1179,13 +1276,24 @@ EOD;
 
 
 		foreach ($rows as $row) {
-			$id = $row->id;
-			$latinsktNamn = htmlspecialchars($row->latinsktNamn);
-			$svensktNamn = htmlspecialchars($row->svensktNamn);
-			$hojd = htmlspecialchars($row->hojd);
-			$blomtid = htmlspecialchars($row->blomtid);
+			$id = $row->B001_ID;
+			$vaxtkod = $row->C001_Vaxtkod;
 
-			$this->_showPlant($id . '.jpg', $latinsktNamn, $svensktNamn, $id);
+			$sql3 = "SELECT C001_Bildnamn FROM sp_bild WHERE B002_VaxtID='$vaxtkod' LIMIT 0,1";
+			$rows3 = $wpdb->get_results($sql3);
+			if ($rows3 === FALSE) {
+				echo "Databasfel! (query3 fel)";
+				return;
+			}
+			if (count($rows3) > 0)
+				$filename = $rows3[0]->C001_Bildnamn;
+			else
+				$filename = 'dummy.png';
+
+			$latinsktNamn = htmlspecialchars($row->C002_Latinskt_namn_langt);
+			$svensktNamn = htmlspecialchars($row->C006_Svenskt_namn_langt);
+
+			$this->_showPlant($filename, $latinsktNamn, $svensktNamn, $id);
 		}
 
 		echo <<<EOD
@@ -1244,7 +1352,7 @@ EOD;
 
 	function _showPlant($imageFilename, $latTitle, $sweTitle, $id) {
 		$html = <<<EOD
-<div class="assortmentView2Plant"><img class="assortmentView2Image" src="/wp-content/plantimages/ros.jpg" /><div style="height:35px;">
+<div class="assortmentView2Plant"><img class="assortmentView2Image" src="/wp-content/plantimages/$imageFilename" /><div style="height:35px;">
 		<span class="assortmentView2SweTitle">$sweTitle</span><br>
 		<span class="assortmentView2LatTitle">$latTitle</span>
 	</div>

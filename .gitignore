@@ -3,7 +3,10 @@ wp-config.php
 .AppleDouble
 .LSOverride
 Icon
-
+wp-content/plantimages/*
+cgi-bin/*
+fixdb.php
+wusage/*
 
 # Thumbnails
 ._*
