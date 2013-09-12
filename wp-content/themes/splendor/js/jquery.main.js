@@ -4,7 +4,7 @@
  * Version: 1.0
  * Date: 2013-03-07
  */
-jQuery(document).ready(function($){
+jQuery(document).ready(function($) {
 
   //media queries
   $(window).resize(function() {
@@ -21,7 +21,17 @@ jQuery(document).ready(function($){
     else {
       $('#head-img').show();
     }
-  });    
+  });
+
+
+
+
+//set the sidebar at least as heigh as #main
+  var mainHeight = $("#main").height() - 44;
+  if ($("#sidebar").height() < mainHeight) {
+    $("#sidebar").height(mainHeight);
+  }
+
 
 
 
